@@ -1,13 +1,13 @@
-# Název mého projektu, programu, hry...
+# Solitaire
 
 ## Téma
 
-Tady bude krátký a úderný popis o účelu, významu, funkcionalitě...
+Solitaire...
 
 ## Odkazy pro vývoj
 
 Zde budou živé linky na:
-- figma návrh stránek aplikace
+- [Figma](https://www.figma.com/file/e0tTUWbeXNAwgOEUv4Lbgo/Untitled?type=design&node-id=0%3A1&mode=design&t=JWjWQCuOsXTyIWAQ-1)
 - odkaz na gh-pages projektu
 - odkaz do repozitáře projektu, pokud pracuji v teamu a zde vývoj neprobíhá
 
