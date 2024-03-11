@@ -2,7 +2,7 @@
 
 ## Téma
 
-Solitaire...
+Solitaire... (asi mi bude sačit ta jednodušší [verze](https://www.google.com/search?q=solitaire&rlz=1C1VDKB_enCZ1078CZ1078&oq=solitaire&gs_lcrp=EgZjaHJvbWUqDggAEEUYJxg7GIAEGIoFMg4IABBFGCcYOxiABBiKBTIPCAEQLhhDGNQCGIAEGIoFMgwIAhAAGEMYgAQYigUyDAgDEAAYQxiABBiKBTIHCAQQABiABDIHCAUQABiABDIHCAYQABiABDIHCAcQABiABDIHCAgQLhiABDIHCAkQABiABNIBCDE0OTlqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8))
 
 ## Odkazy pro vývoj
 
