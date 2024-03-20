@@ -1,8 +1,8 @@
-# Solitaire
+# Monopoly: Liberec Edition
 
 ## Téma
 
-Solitaire... (asi mi bude stačit ta jednodušší [verze](https://www.google.com/search?q=solitaire&rlz=1C1VDKB_enCZ1078CZ1078&oq=solitaire&gs_lcrp=EgZjaHJvbWUqDggAEEUYJxg7GIAEGIoFMg4IABBFGCcYOxiABBiKBTIPCAEQLhhDGNQCGIAEGIoFMgwIAhAAGEMYgAQYigUyDAgDEAAYQxiABBiKBTIHCAQQABiABDIHCAUQABiABDIHCAYQABiABDIHCAcQABiABDIHCAgQLhiABDIHCAkQABiABNIBCDE0OTlqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8))
+Monopoly, ale Liberec edice, AKA Fügnerova, Šaldovo náměstí; Vězení -> Hodiny u pana Školníka; nádraží -> tramvajové zastávky; elektrárna -> liberecká teplárna; atd...
 
 ## Odkazy pro vývoj
 
