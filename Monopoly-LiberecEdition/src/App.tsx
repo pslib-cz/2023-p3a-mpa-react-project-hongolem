@@ -1,12 +1,17 @@
 import './App.css'
+import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route } from "react-router-dom";
+import Game from "./pages/Game.tsx";
+import Menu from "./pages/Menu.tsx";
 
-function App() {
-
+export const App = () => {
+    const router = createBrowserRouter(
+        createRoutesFromElements([
+            <Route path="/" element={<Menu />} />,
+            <Route path="/game" element={<Game />} />,
+        ])
+    )
     return (
-        <>
-            <h1>Monopoly - Liberec Edition</h1>
-
-        </>
+        <RouterProvider router={router} />
     )
 }
 
