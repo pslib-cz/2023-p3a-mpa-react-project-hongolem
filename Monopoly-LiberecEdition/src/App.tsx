@@ -4,7 +4,8 @@ function App() {
 
     return (
         <>
-            <button>Test</button>
+            <h1>Monopoly - Liberec Edition</h1>
+
         </>
     )
 }
