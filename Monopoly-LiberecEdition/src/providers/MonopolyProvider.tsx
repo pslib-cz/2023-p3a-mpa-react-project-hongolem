@@ -55,23 +55,24 @@ type Action =
 
 const reducer = (state: GameState, action: Action): GameState => {
     const newState: GameState = JSON.parse(JSON.stringify(state));
-    switch(action.type) {
+    let currentPlayer = newState.players[newState.currentPlayerIndex];
+    switch (action.type) {
         case 'DICEROLL':
-            const diceroll = Math.floor(Math.random() * 6) + 1;
-            const currentPlayer = newState.players[newState.currentPlayerIndex+diceroll] || newState.players[diceroll];
+            const dice1 = Math.floor(Math.random() * 6) + 1;
+            const dice2 = Math.floor(Math.random() * 6) + 1;
+            const sum = dice1 + dice2;
+            currentPlayer.position = (currentPlayer.position + sum) % newState.gameBoard.fields.length;
             return newState;
         case 'BUY_PROPERTY':
-            const property = newState.gameBoard.fields.find(field => field.id === action.property.id) as FieldType;
-            if (property) {
-                property.owner = action.player;
-                action.player.money -= property.price;
-            }
+            currentPlayer.properties.push(action.property.name);
+            currentPlayer.money -= action.property.price;
             return newState;
         case 'PAY_RENT':
-            const rentProperty = newState.gameBoard.fields.find(field => field.id === action.property.id) as FieldType;
-            if (rentProperty) {
-                action.player.money -= rentProperty.rent;
-                rentProperty.owner!.money += rentProperty.rent;
+            let owner = newState.players.find(player => player.properties.includes(action.property.name))!;
+            if (owner) {
+                owner.money += action.property.price;
+                currentPlayer.money -= action.property.price;
+                return newState;
             }
             return newState;
         case 'WIN_GAME':
