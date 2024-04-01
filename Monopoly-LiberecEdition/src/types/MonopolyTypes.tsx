@@ -89,6 +89,7 @@ export type IncineratorType = {
     id: number;
     name: string;
     price: number;
+    rent: number;
     owner?: PlayerType;
 };
 
@@ -97,6 +98,7 @@ export type DamType = {
     id: number;
     name: string;
     price: number;
+    rent: number;
     owner?: PlayerType;
 };
 
@@ -111,11 +113,15 @@ export type PlayerType = {
     name: string;
     money: number;
     position: number;
-    properties: string[];
+    districts: DistrictType[];
+    tramStops: TramStopType[];
+    incinerators: IncineratorType[];
+    dams: DamType[];
 };
 
 export interface GameState {
     players: PlayerType[];
     currentPlayerIndex: number;
     gameBoard: BoardType;
+    winner: PlayerType | undefined;
 }

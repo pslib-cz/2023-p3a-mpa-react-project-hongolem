@@ -285,27 +285,30 @@ export const bus: BusType = {
     name: "Bus"
 };
 
-export const tax: TaxType = {
-        type: MonopolyTypes.TAX,
-        id: 38,
-        name: "Finančák",
-        price: 100
-    };
+export const tax: TaxType[] = [{
+    type: MonopolyTypes.TAX,
+    id: 38,
+    name: "Finančák",
+    price: 100
+}];
 
-export const incinerator: IncineratorType = {
+export const incinerator: IncineratorType[] = [{
     type: MonopolyTypes.INCINERATOR,
     id: 12,
     name: "Spalovna Odpadu",
     price: 250,
+    rent: 50,
     owner: undefined
-};
+}];
 
-export const dam: DamType = {
+export const dam: DamType[] = [{
     type: MonopolyTypes.DAM,
     id: 28,
     name: "Liberecká přehrada",
     price: 250,
-};
+    rent: 50,
+    owner: undefined
+}];
 
 export const start: StartType = {
     type: MonopolyTypes.START,
