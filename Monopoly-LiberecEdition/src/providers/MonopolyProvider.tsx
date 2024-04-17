@@ -1,7 +1,6 @@
 import {
     DamType,
     DistrictType,
-    FieldType,
     GameState,
     IncineratorType,
     PlayerType,
@@ -24,7 +23,7 @@ import {
 
 interface IGameContext {
     state: GameState;
-    dispatch: (state: Action) => void;
+    dispatch: (action: Action) => void;
 }
 
 const GameContext = createContext<IGameContext>({} as IGameContext);
@@ -52,28 +51,33 @@ const initialState: GameState = {
             ...dam,
         ].sort((a,b) => a.id - b.id),
     },
+    round: 0,
     winner: undefined,
 };
 
 type Action =
-    | { type: 'DICEROLL'; }
-    | { type: 'BUY_PROPERTY'; player: PlayerType; property: DistrictType | TramStopType | IncineratorType | DamType; }
-    | { type: 'PAY_RENT'; player: PlayerType; property: DistrictType | TramStopType | IncineratorType | DamType; }
-    | { type: 'WIN_GAME'; player: PlayerType; }
+    | { type: 'DICE ROLL'; }
+    | { type: 'BUY_PROPERTY'; }
+    | { type: 'PAY_RENT'; }
+    | { type: "UPGRADE"; level: 0|1|2|3|4; }
+    | { type: "SELL"; }
+    | { type: "END_TURN"; }
+    | { type: 'WIN_GAME'; }
 
 const reducer = (state: GameState, action: Action): GameState => {
     const newState: GameState = JSON.parse(JSON.stringify(state));
     let currentPlayer = newState.players[newState.currentPlayerIndex];
+    let currentPlayerField = initialState.gameBoard.fields[currentPlayer.position];
     switch (action.type) {
-        case 'DICEROLL':
+        case 'DICE ROLL':
             const dice1 = Math.floor(Math.random() * 6) + 1;
             const dice2 = Math.floor(Math.random() * 6) + 1;
             const sum = dice1 + dice2;
             currentPlayer.position = (currentPlayer.position + sum) % newState.gameBoard.fields.length;
             return newState;
         case 'BUY_PROPERTY':
-            const buyProperty = newState.gameBoard.fields.find(field => field.id === action.property.id) as DistrictType | TramStopType | IncineratorType | DamType
-            if (buyProperty && !buyProperty.owner && currentPlayer.money >= action.property.price) {
+            const buyProperty = newState.gameBoard.fields.find(field => field.id === currentPlayerField.id) as DistrictType | TramStopType | IncineratorType | DamType
+            if (buyProperty && !buyProperty.owner && currentPlayer.money >= currentPlayerField.) {
                 buyProperty.owner = currentPlayer;
                 currentPlayer.money -= action.property.price;
                 return newState;
@@ -86,6 +90,8 @@ const reducer = (state: GameState, action: Action): GameState => {
                 rentProperty.owner!.money += rentProperty.rent;
             }
             return newState;
+        case "END_TURN":
+            
         case 'WIN_GAME':
 
             const monopoles = districts.filter(district => district.monopolyId);
@@ -106,6 +112,7 @@ const reducer = (state: GameState, action: Action): GameState => {
 
             }
             return newState;
+            */
         default:
             return state;
     }

@@ -16,96 +16,74 @@ export type BoardType = {
     fields: Field[];
 };
 
-export type FieldType = {
-    name: string;
-    price: number;
+export type FieldType = { 
+    text: string;
+    /*price: number;
     rent: number;
     owner: PlayerType;
-    color: string;
+    color: string;*/
     type: MonopolyTypes;
     id: number;
 };
 
 export type Field = DistrictType | TramStopType | JanitorType | GambaType | DavkyType | FreeFieldType | BusType | TaxType | IncineratorType | DamType | StartType;
 
-export type DistrictType = {
-    type: MonopolyTypes.DISTRICT;
-    id: number;
+export type DistrictType = FieldType & {
     monopolyId: number;
-    name: string;
     price: number;
     rent: number;
     owner?: PlayerType;
+    level: 0|1|2|3|4;
 };
 
-export type TramStopType = {
+export type TramStopType = FieldType & {
     type: MonopolyTypes.TRAM_STOP;
-    id: number;
-    name: string;
     price: number;
     rent: number;
     owner?: PlayerType;
 };
 
-export type JanitorType = {
+export type JanitorType = FieldType & {
     type: MonopolyTypes.JANITOR;
-    id: number;
-    name: string;
 };
 
-export type GambaType = {
+export type GambaType = FieldType & {
     type: MonopolyTypes.GAMBA;
-    id: number;
-    text: string;
 };
 
-export type DavkyType = {
+export type DavkyType = FieldType & {
     type: MonopolyTypes.DAVKY;
-    id: number;
-    text: string;
 };
 
-export type FreeFieldType = {
+export type FreeFieldType = FieldType & {
     type: MonopolyTypes.FREE_FIELD;
-    id: number;
-    name: string;
 };
 
-export type BusType = {
+export type BusType = FieldType & {
     type: MonopolyTypes.BUS;
-    id: number;
-    name: string;
 };
 
-export type TaxType = {
+export type TaxType = FieldType & {
     type: MonopolyTypes.TAX;
-    id: number;
-    name: string;
     price: number;
 };
 
-export type IncineratorType = {
+export type IncineratorType = FieldType & {
     type: MonopolyTypes.INCINERATOR;
-    id: number;
-    name: string;
     price: number;
     rent: number;
     owner?: PlayerType;
 };
 
-export type DamType = {
+export type DamType = FieldType & {
     type: MonopolyTypes.DAM;
-    id: number;
-    name: string;
     price: number;
     rent: number;
     owner?: PlayerType;
 };
 
-export type StartType = {
+export type StartType = FieldType & {
     type: MonopolyTypes.START;
-    id: number;
-    name: string;
 };
 
 export type PlayerType = {
@@ -119,9 +97,10 @@ export type PlayerType = {
     dams: DamType[];
 };
 
-export interface GameState {
+export type GameState = {
     players: PlayerType[];
     currentPlayerIndex: number;
     gameBoard: BoardType;
+    round: number;
     winner: PlayerType | undefined;
 }
