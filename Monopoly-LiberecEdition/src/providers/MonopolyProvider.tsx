@@ -29,7 +29,7 @@ interface IGameContext {
     dispatch: (action: Action) => void;
 }
 
-const GameContext = createContext<IGameContext>({} as IGameContext);
+export const GameContext = createContext<IGameContext>({} as IGameContext);
 
 const initialState: GameState = {
     players: [
@@ -58,7 +58,7 @@ const initialState: GameState = {
 };
 
 type Action =
-    | { type: 'DICE ROLL'; }
+    | { type: 'DICE_ROLL'; }
     | { type: 'BUY_PROPERTY'; }
     | { type: "UPGRADE"; }
     | { type: "SELL"; }
@@ -79,7 +79,7 @@ const reducer = (state: GameState, action: Action): GameState => {
     }
     
     switch (action.type) {
-        case 'DICE ROLL':
+        case 'DICE_ROLL':
             if (currentPlayerField.type === MonopolyTypes.JANITOR) {
                 currentPlayer.janitorRounds += 1;
             } else {

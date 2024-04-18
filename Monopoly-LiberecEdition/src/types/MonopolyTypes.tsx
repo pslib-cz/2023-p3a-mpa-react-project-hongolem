@@ -18,10 +18,6 @@ export type BoardType = {
 
 export type FieldType = { 
     text: string;
-    /*price: number;
-    rent: number;
-    owner: PlayerType;
-    color: string;*/
     type: MonopolyTypes;
     id: number;
 };
