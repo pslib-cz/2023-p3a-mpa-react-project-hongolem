@@ -7,9 +7,6 @@ const Game: React.FC = () => {
             <h1>Game</h1>
             <button onClick={() => {}}>Diceroll</button>
             <Link to="/">Menu</Link>
-
-
-
         </div>
     );
 }

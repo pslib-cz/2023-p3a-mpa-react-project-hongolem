@@ -284,7 +284,8 @@ export const tramStops: TramStopType[] = [
 export const janitor: JanitorType = {
     type: MonopolyTypes.JANITOR, 
     id: 10,
-    text: "Janitor"
+    text: "Janitor",
+    players: [],
 };
 
 export const gamby: GambaType[] = [
@@ -340,4 +341,5 @@ export const start: StartType = {
     type: MonopolyTypes.START,
     id: 0,
     text: "Start",
+    reward: 200,
 };

@@ -45,6 +45,7 @@ export type TramStopType = FieldType & {
 
 export type JanitorType = FieldType & {
     type: MonopolyTypes.JANITOR;
+    players: number[];
 };
 
 export type GambaType = FieldType & {
@@ -84,6 +85,7 @@ export type DamType = FieldType & {
 
 export type StartType = FieldType & {
     type: MonopolyTypes.START;
+    reward: number;
 };
 
 export type PlayerType = {
@@ -91,16 +93,18 @@ export type PlayerType = {
     name: string;
     money: number;
     position: number;
+    round: number;
     districts: DistrictType[];
     tramStops: TramStopType[];
     incinerators: IncineratorType[];
     dams: DamType[];
+    janitorRounds: number;
+    
 };
 
 export type GameState = {
     players: PlayerType[];
     currentPlayerIndex: number;
     gameBoard: BoardType;
-    round: number;
     winner: PlayerType | undefined;
 }
