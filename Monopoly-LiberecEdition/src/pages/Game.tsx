@@ -22,7 +22,23 @@ const GameBoardPage: React.FC = () => {
         ) {
             dispatch({ type: 'BUY_PROPERTY' });
         } else {
-            console.log("You can't buy this field.");
+            console.log("You can't buy this field. (1)");
+        }
+    };
+    
+    const handleSellProperty = () => {
+        const currentPlayer = state.players[state.currentPlayerIndex];
+        const currentField = state.gameBoard.fields[currentPlayer.position];
+
+        if (
+            currentField.type === MonopolyTypes.DISTRICT
+            || currentField.type === MonopolyTypes.TRAM_STOP
+            || currentField.type === MonopolyTypes.DAM
+            || currentField.type === MonopolyTypes.INCINERATOR
+        ) {
+            dispatch({ type: 'SELL' });
+        } else {
+            console.log("You can't sell this field. (2)");
         }
     };
 
@@ -35,6 +51,7 @@ const GameBoardPage: React.FC = () => {
             <h1>Monopoly Game Board</h1>
             <button onClick={handleDiceRoll}>Roll Dice</button>
             <button onClick={handleBuyProperty}>Buy Property</button>
+            <button onClick={handleSellProperty}>Sell Property</button>
             <button onClick={handleEndTurn}>End Turn</button>
             <pre>{JSON.stringify(state.players, null, 2)}</pre>
             {state.gameBoard.fields.map((field, index) => (

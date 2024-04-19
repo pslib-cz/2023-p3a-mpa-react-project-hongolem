@@ -28,7 +28,7 @@ export type DistrictType = FieldType & {
     monopolyId: number;
     price: number;
     rent: number;
-    owner?: PlayerType;
+    owner?: PlayerType["id"];
     level: 0|1|2|3|4;
 };
 
@@ -36,7 +36,7 @@ export type TramStopType = FieldType & {
     type: MonopolyTypes.TRAM_STOP;
     price: number;
     rent: number;
-    owner?: PlayerType;
+    owner?: PlayerType["id"];
 };
 
 export type JanitorType = FieldType & {
@@ -69,14 +69,14 @@ export type IncineratorType = FieldType & {
     type: MonopolyTypes.INCINERATOR;
     price: number;
     rent: number;
-    owner?: PlayerType;
+    owner?: PlayerType["id"];
 };
 
 export type DamType = FieldType & {
     type: MonopolyTypes.DAM;
     price: number;
     rent: number;
-    owner?: PlayerType;
+    owner?: PlayerType["id"];
 };
 
 export type StartType = FieldType & {
@@ -90,10 +90,10 @@ export type PlayerType = {
     money: number;
     position: number;
     round: number;
-    districts: DistrictType[];
-    tramStops: TramStopType[];
-    incinerators: IncineratorType[];
-    dams: DamType[];
+    districts: DistrictType["id"][];
+    tramStops: TramStopType["id"][];
+    incinerators: IncineratorType["id"][];
+    dams: DamType["id"][];
     janitorRounds: number;
     
 };
@@ -103,4 +103,5 @@ export type GameState = {
     currentPlayerIndex: number;
     gameBoard: BoardType;
     winner: PlayerType | undefined;
+    round: number;
 }

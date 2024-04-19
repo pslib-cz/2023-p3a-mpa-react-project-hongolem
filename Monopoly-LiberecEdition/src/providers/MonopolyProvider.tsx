@@ -55,6 +55,7 @@ const initialState: GameState = {
         ].sort((a,b) => a.id - b.id),
     },
     winner: undefined,
+    round: 1,
 };
 
 type Action =
@@ -76,51 +77,57 @@ const reducer = (state: GameState, action: Action): GameState => {
             currentPlayer.money += (start as StartType).reward;
         }
         currentPlayer.position = (currentPlayer.position + dice) % newState.gameBoard.fields.length;
+        currentPlayerField = newState.gameBoard.fields[currentPlayer.position];
+        console.log(`Player ${currentPlayer.id} rolled ${dice} and landed on ${currentPlayerField.text}`)
     }
     
     switch (action.type) {
         case 'DICE_ROLL':
-            if (currentPlayerField.type === MonopolyTypes.JANITOR) {
-                currentPlayer.janitorRounds += 1;
+            if (currentPlayer.round > newState.round) {
+                console.log("You can't roll the dice more than once per round.");
             } else {
-                diceRoll();
+                if (currentPlayerField.type === MonopolyTypes.JANITOR) {
+                    currentPlayer.janitorRounds += 1;
+                } else {
+                    diceRoll();
+                }
+                currentPlayer.round += 1;
             }
-            currentPlayer.round += 1;
             switch (currentPlayerField.type) {
                 case MonopolyTypes.DISTRICT:
                     const district = currentPlayerField as DistrictType;
                     if (!district.owner) {
                         break;
-                    } else if (district.owner.id !== currentPlayer.id) {
+                    } else if (district.owner !== currentPlayer.id) {
                         currentPlayer.money -= district.rent;
-                        district.owner.money += district.rent;
+                        newState.players[district.owner].money += district.rent;
                     }
                     break;
                 case MonopolyTypes.TRAM_STOP:
                     const tramStop = currentPlayerField as TramStopType;
                     if (!tramStop.owner) {
                         break;
-                    } else if (tramStop.owner.id !== currentPlayer.id) {
+                    } else if (tramStop.owner !== currentPlayer.id) {
                         currentPlayer.money -= tramStop.rent;
-                        tramStop.owner.money += tramStop.rent;
+                        newState.players[tramStop.owner].money += tramStop.rent;
                     }
                     break;
                 case MonopolyTypes.INCINERATOR:
                     const incinerator = currentPlayerField as IncineratorType;
                     if (!incinerator.owner) {
                         break;
-                    } else if (incinerator.owner.id !== currentPlayer.id) {
+                    } else if (incinerator.owner !== currentPlayer.id) {
                         currentPlayer.money -= incinerator.rent;
-                        incinerator.owner.money += incinerator.rent;
+                        newState.players[incinerator.owner].money += incinerator.rent;
                     }
                     break;
                 case MonopolyTypes.DAM:
                     const dam = currentPlayerField as DamType;
                     if (!dam.owner) {
                         break;
-                    } else if (dam.owner.id !== currentPlayer.id) {
+                    } else if (dam.owner !== currentPlayer.id) {
                         currentPlayer.money -= dam.rent;
-                        dam.owner.money += dam.rent;
+                        newState.players[dam.owner].money += dam.rent;
                     }
                     break;
                 case MonopolyTypes.JANITOR:
@@ -159,59 +166,73 @@ const reducer = (state: GameState, action: Action): GameState => {
             if (currentPlayerField.type === MonopolyTypes.DISTRICT) {
                 const district = currentPlayerField as DistrictType;
                 if (!district.owner && currentPlayer.money >= district.price) {
-                    currentPlayer.districts.push(district);
+                    currentPlayer.districts.push(district.id);
                     currentPlayer.money -= district.price;
-                    district.owner = currentPlayer;
+                    district.owner = currentPlayer.id;
                     district.level = 1;
+                    console.log(`Player ${currentPlayer.id} bought ${district.text} for ${district.price} and now has ${currentPlayer.money} money left.`)
                 }
             } else if (currentPlayerField.type === MonopolyTypes.TRAM_STOP) {
                 const tramStop = currentPlayerField as TramStopType;
                 if (!tramStop.owner && currentPlayer.money >= tramStop.price) {
-                    currentPlayer.tramStops.push(tramStop);
+                    currentPlayer.tramStops.push(tramStop.id);
                     currentPlayer.money -= tramStop.price;
-                    tramStop.owner = currentPlayer;
+                    tramStop.owner = currentPlayer.id;
+                    console.log(`Player ${currentPlayer.id} bought ${tramStop.text} for ${tramStop.price} and now has ${currentPlayer.money} money left.`)
                 }
             } else if (currentPlayerField.type === MonopolyTypes.INCINERATOR) {
                 const incinerator = currentPlayerField as IncineratorType;
                 if (!incinerator.owner && currentPlayer.money >= incinerator.price) {
-                    currentPlayer.incinerators.push(incinerator);
+                    currentPlayer.incinerators.push(incinerator.id);
                     currentPlayer.money -= incinerator.price;
-                    incinerator.owner = currentPlayer;
+                    incinerator.owner = currentPlayer.id;
+                    console.log(`Player ${currentPlayer.id} bought ${incinerator.text} for ${incinerator.price} and now has ${currentPlayer.money} money left.`)
                 }
             } else if (currentPlayerField.type === MonopolyTypes.DAM) {
                 const dam = currentPlayerField as DamType;
                 if (!dam.owner && currentPlayer.money >= dam.price) {
-                    currentPlayer.dams.push(dam);
+                    currentPlayer.dams.push(dam.id);
                     currentPlayer.money -= dam.price;
-                    dam.owner = currentPlayer;
+                    dam.owner = currentPlayer.id;
+                    console.log(`Player ${currentPlayer.id} bought ${dam.text} for ${dam.price} and now has ${currentPlayer.money} money left.`)
+                } else {
+                    console.log("You can't buy this field. (2)");
                 }
             }
             return newState;
         case "UPGRADE":
-            if (currentPlayerField.type === MonopolyTypes.DISTRICT && currentPlayerField.owner === currentPlayer) {
+            if (currentPlayerField.type === MonopolyTypes.DISTRICT && currentPlayerField.owner === currentPlayer.id) {
                 const district = currentPlayerField as DistrictType;
                 if (district.level < 4 && currentPlayer.money >= district.price) {
-                    currentPlayer.money -= district.price/ (district.rent * 5);
+                    const upgradePrice = district.price/ (district.rent * 5)
+                    currentPlayer.money -= upgradePrice;
                     district.level += 1;
+                    console.log(`Player ${currentPlayer.id} upgraded ${district.text} to level ${district.level} for ${upgradePrice} and now has ${currentPlayer.money} money left.`)
+                } else {
+                    console.log("You can't upgrade this district.");
                 }
             }
             return newState;
         case "SELL":
-            if (currentPlayerField.type === (MonopolyTypes.DISTRICT || MonopolyTypes.TRAM_STOP || MonopolyTypes.INCINERATOR || MonopolyTypes.DAM) && currentPlayerField.owner === currentPlayer) {
+            if (currentPlayerField.type === (MonopolyTypes.DISTRICT || MonopolyTypes.TRAM_STOP || MonopolyTypes.INCINERATOR || MonopolyTypes.DAM) && currentPlayerField.owner === currentPlayer.id) {
                 const district = currentPlayerField as DistrictType | TramStopType | IncineratorType | DamType;
                 currentPlayer.money += district.price;
                 if (district.type === MonopolyTypes.DISTRICT) {
                     district.level = 0;
                 }
                 district.owner = undefined;
+                console.log(`Player ${currentPlayer.id} sold ${district.text} for ${district.price} and now has ${currentPlayer.money} money left.`)
+            } else {
+                console.log("You can't sell this field.");
             }
             return newState;
         case "END_TURN":
             newState.currentPlayerIndex = (newState.currentPlayerIndex + 1) % newState.players.length;
+            console.log(`Player ${currentPlayer.id} ended their turn.`)
             return newState;
         case 'WIN_GAME':
             const monopoles = districts.filter(district => district.monopolyId);
-            const playerMonopoles = currentPlayer.districts.filter(district => district.monopolyId);
+            const playerMonopoles = districts.filter(district => district.owner === currentPlayer.id && district.monopolyId);
             let numberOfMonopoles = 0;
             for (const monopole of monopoles) {
                 for (const playerMonopole of playerMonopoles) {
@@ -220,7 +241,8 @@ const reducer = (state: GameState, action: Action): GameState => {
                     }
                 }
             }
-            if (tramStops.every(stop => stop.owner === currentPlayer) || (numberOfMonopoles >= 3) || (newState.players.filter(player => player.money <= 0).length === 3)) {
+            if (tramStops.every(stop => stop.owner === currentPlayer.id) || (numberOfMonopoles >= 3) || (newState.players.filter(player => player.money <= 0).length === 3)) {
+                console.log(`Player ${currentPlayer.id} won the game!`)
                 return {
                     ...newState,
                     winner: currentPlayer
