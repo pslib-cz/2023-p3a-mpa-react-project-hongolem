@@ -42,6 +42,10 @@ const GameBoardPage: React.FC = () => {
         }
     };
 
+    const handleUpgrade = () => {
+        dispatch({type: 'UPGRADE'});
+    };
+
     const handleEndTurn = () => {
         dispatch({ type: 'END_TURN' });
     };
@@ -52,6 +56,7 @@ const GameBoardPage: React.FC = () => {
             <button onClick={handleDiceRoll}>Roll Dice</button>
             <button onClick={handleBuyProperty}>Buy Property</button>
             <button onClick={handleSellProperty}>Sell Property</button>
+            <button onClick={handleUpgrade}>Upgrade</button>
             <button onClick={handleEndTurn}>End Turn</button>
             <pre>{JSON.stringify(state.players, null, 2)}</pre>
             {state.gameBoard.fields.map((field, index) => (
