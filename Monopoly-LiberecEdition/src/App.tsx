@@ -8,7 +8,9 @@ export const App = () => {
         createRoutesFromElements([
             <Route path="/" element={<Menu />} />,
             <Route path="/game" element={<Game />} />,
-        ])
+        ]),{
+            basename: "/2023-p3a-mpa-react-project-hongolem",
+        }
     )
     return (
         <RouterProvider router={router} />
