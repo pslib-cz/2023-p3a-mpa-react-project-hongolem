@@ -19,14 +19,13 @@ a.red:hover, button.red:hover {
     background-color: var(--red-hover);
 }
 
-a.grey, button.grey {
-    background-color: var(--grey);
-}
-a.grey:hover, button.grey:hover {
-    background-color: var(--grey-hover);
-}
-
 button:focus, a:focus,
 button:focus-visible, a:focus-visible {
     outline: 1px auto -webkit-focus-ring-color;
+}
+
+button:disabled, a:disabled, a.red:disabled, button.red:disabled {
+    background-color: var(--grey);
+    color: var(--black);
+    cursor: not-allowed;
 }

@@ -59,6 +59,7 @@ const initialState: GameState = {
 };
 
 type Action =
+    | { type: 'SET_PLAYER_NAME'; payload: { playerId: number; name: string; } }
     | { type: 'DICE_ROLL'; }
     | { type: 'BUY_PROPERTY'; }
     | { type: "UPGRADE"; }
@@ -83,6 +84,12 @@ const reducer = (state: GameState, action: Action): GameState => {
     }
     
     switch (action.type) {
+        case 'SET_PLAYER_NAME':
+            const player = state.players.find(player => player.id === action.payload.playerId);
+            if (player) {
+                player.name = action.payload.name;
+            }
+            return { ...state };
         case 'DICE_ROLL':
             if (currentPlayer.round > newState.round) {
                 console.log("You can't roll the dice more than once per round.");
@@ -98,6 +105,7 @@ const reducer = (state: GameState, action: Action): GameState => {
                 case MonopolyTypes.DISTRICT:
                     const district = currentPlayerField as DistrictType;
                     if (!district.owner) {
+                        //setAttribute("disabled", "disabled");
                         break;
                     } else if (district.owner !== currentPlayer.id) {
                         currentPlayer.money -= district.rent;
@@ -254,6 +262,9 @@ const reducer = (state: GameState, action: Action): GameState => {
         case "END_TURN":
             newState.currentPlayerIndex = (newState.currentPlayerIndex + 1) % newState.players.length;
             roundActionCount = 0;
+            if (newState.currentPlayerIndex === 0) {
+                newState.round += 1;
+            }
             console.log(roundActionCount)
             console.log(`Player ${currentPlayer.id} ended their turn.`)
             return newState;
