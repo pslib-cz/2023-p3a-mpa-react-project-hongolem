@@ -1,13 +1,24 @@
 import React, {useContext, /*useRef*/} from "react";
-import {MonopolyTypes} from "../types/MonopolyTypes.tsx";
-import {GameContext} from "../providers/MonopolyProvider.tsx";
+import {DamType, DistrictType, IncineratorType, MonopolyTypes, TramStopType} from "../types/MonopolyTypes.tsx";
+import {GameContext, PurchasableFields} from "../providers/MonopolyProvider.tsx";
 import Styles from "./ButtonBox.module.css";
 
 export const ButtonBox = () => {
     const { state, dispatch } = useContext(GameContext);
     const [buttonClicked, setButtonClicked] = React.useState(false);
     //const button = useRef<HTMLElement>(null);
-
+    const currentPlayer = state.players[state.currentPlayerIndex];
+    const currentField = state.gameBoard.fields[currentPlayer.position];
+    let canUpgrade = false;
+    if (currentField.type === MonopolyTypes.DISTRICT) {
+        const district = currentField as DistrictType;
+        canUpgrade = district.owner === currentPlayer.id && currentPlayer.money >=  (district.price/(district.rent * 5)) && district.level < 4  && !state.roundActionBool;
+    }
+    let canBuy = false;
+    if (PurchasableFields.includes(currentField.type)) {
+        const purchasableField = currentField as DistrictType | TramStopType | DamType | IncineratorType;
+        canBuy = purchasableField.owner === undefined && currentPlayer.money >= purchasableField.price && !state.roundActionBool;
+    }
 
     const handleClick = () => {
         setButtonClicked(!buttonClicked);
@@ -44,8 +55,8 @@ export const ButtonBox = () => {
     return (
         <div className={Styles["buttonContainer"]}>
             <button onClick={handleDiceRoll} disabled={buttonClicked} className={Styles["btn"]}>DiceRoll</button>
-            <button onClick={handleBuyProperty} disabled={!buttonClicked} className={Styles["btn"]}>Buy</button>
-            <button onClick={handleUpgrade} disabled={!buttonClicked} className={Styles["btn"]}>Upgrade</button>
+            <button onClick={handleBuyProperty} disabled={!buttonClicked || !canBuy} className={Styles["btn"]}>Buy</button>
+            <button onClick={handleUpgrade} disabled={!buttonClicked || !canUpgrade} className={Styles["btn"]}>Upgrade</button>
             <button onClick={handleEndTurn} disabled={!buttonClicked} className={`red ${Styles["btn"]}`}>End Turn</button>
         </div>
     );

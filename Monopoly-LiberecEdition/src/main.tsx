@@ -9,5 +9,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <MonopolyProvider>
             <App />
         </MonopolyProvider>
-  </React.StrictMode>,
+    </React.StrictMode>
 )

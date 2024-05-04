@@ -95,7 +95,6 @@ export type PlayerType = {
     incinerators: IncineratorType["id"][];
     dams: DamType["id"][];
     janitorRounds: number;
-    
 };
 
 export type GameState = {
@@ -104,4 +103,6 @@ export type GameState = {
     gameBoard: BoardType;
     winner: PlayerType | undefined;
     round: number;
+    roundActionBool: boolean;
+
 }
