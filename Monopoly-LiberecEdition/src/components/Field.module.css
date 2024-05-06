@@ -1,9 +1,9 @@
 .field {
-    height: 100%;
     width: 100%;
     position: relative;
     background-color: var(--white);
     border: 1px solid var(--black);
+    box-sizing: border-box;
 
     --mnpl1: #F00;
     --mnpl2: #0F0;
@@ -288,4 +288,17 @@
 .field:nth-child(40) {
     grid-column: 11;
     grid-row: 10;
+}
+
+.field--player1{
+    background-image: repeating-linear-gradient(135deg, transparent, transparent 10px, #f66 10px, #f66 20px);
+}
+.field--player2 {
+    background-image: repeating-linear-gradient(135deg, transparent, transparent 10px, #6f6 10px, #6f6 20px);
+}
+.field--player3 {
+    background-image: repeating-linear-gradient(135deg, transparent, transparent 10px, #66f 10px, #66f 20px);
+}
+.field--player4 {
+    background-image: repeating-linear-gradient(135deg, transparent, transparent 10px, #ff7 10px, #ff7 20px);
 }

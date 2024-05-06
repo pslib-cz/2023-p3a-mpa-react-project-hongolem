@@ -23,15 +23,17 @@
 }
 
 .textContainer {
-    margin: 3em auto;
-    border: 1px solid var(--black);
-    border-radius: 1em;
-    background-color: var(--blue);
-    width: max-content;
-    grid-column: 1 / span 8;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    width: 100%;
+    grid-column: 2 / span 9;
     grid-row: 2 / span 9;
 }
 
 .message {
-    font-size: 3rem;
+    font-size: 2rem;
+    margin: 1em;
 }

@@ -1,6 +1,13 @@
-import {FieldType, MonopolyTypes} from "../types/MonopolyTypes.tsx";
-import {FC, /*useContext*/} from "react";
-//import {GameContext} from "../providers/MonopolyProvider.tsx";
+import {
+    DamType,
+    DistrictType,
+    FieldType,
+    IncineratorType,
+    MonopolyTypes,
+    TramStopType
+} from "../types/MonopolyTypes.tsx";
+import {FC, useContext} from "react";
+import {GameContext} from "../providers/MonopolyProvider.tsx";
 import Styles from "./Field.module.css";
 import StartField from "./Fields/StartField";
 import TramStopField from "./Fields/TramStopField";
@@ -52,12 +59,19 @@ const renderField = (field: FieldType) => {
 type FieldState = "horizontal" | "vertical" | "corner";
 
 export const Field: FC<FieldProps> = ({index, field}) => {
-    //const {state} = useContext(GameContext);
+    const {state} = useContext(GameContext);
     const fieldState: FieldState = index % 10 === 0 ? "corner" : Math.floor(index / 10) % 2 === 0 ? "vertical" : "horizontal";
+    const owner = state.players.find(player => (
+        (field as DistrictType | TramStopType | IncineratorType | DamType).owner === player.id
+    ));
+    let ownerString = "";
 
-
+    if (owner) {
+        ownerString = `field--player${owner.id}`;
+    }
+    
     return (
-        <div className={`${Styles["field"]} ${Styles[`field--${fieldState}`]}`}>
+        <div className={`${Styles["field"]} ${Styles[`field--${fieldState}`]} ${Styles[`${ownerString}`]}`}>
             {renderField(field)}
         </div>
     );

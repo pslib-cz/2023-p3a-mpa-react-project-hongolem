@@ -1,15 +1,10 @@
-import {PlayerType} from "../types/MonopolyTypes.tsx";
-import {FC} from "react";
+import {FC, useContext} from "react";
 import Styles from "./InfoBox.module.css";
+import {GameContext} from "../providers/MonopolyProvider.tsx";
 
-interface InfoBoxProps {
-    players: PlayerType[];
-    money: number[];
-    currentPlayerIndex: number;
-    round: number;
-}
-
-export const InfoBox: FC<InfoBoxProps> = ({players, money, round, currentPlayerIndex}) => {
+export const InfoBox: FC = () => {
+    const {state} = useContext(GameContext);
+    
     return (
         <div className={Styles["tableContainer"]}>
             <table>
@@ -21,30 +16,30 @@ export const InfoBox: FC<InfoBoxProps> = ({players, money, round, currentPlayerI
                 </thead>
                 <tbody>
                     <tr>
-                        <th>{players[0].name}</th>
-                        <td>{(money[2]<=0) ? "Bankrupt!":money[0]}</td>
+                        <th>{state.players[0].name}</th>
+                        <td>{(state.players[0].money<=0) ? "Bankrupt!":state.players[0].money}</td>
                     </tr>
                     <tr>
-                        <th>{players[1].name}</th>
-                        <td>{(money[2]<=0) ? "Bankrupt!":money[1]}</td>
+                        <th>{state.players[1].name}</th>
+                        <td>{(state.players[1].money<=0) ? "Bankrupt!":state.players[1].money}</td>
                     </tr>
                     <tr>
-                        <th>{players[2].name}</th>
-                        <td>{(money[2]<=0) ? "Bankrupt!":money[2]}</td>
+                        <th>{state.players[2].name}</th>
+                        <td>{(state.players[2].money<=0) ? "Bankrupt!":state.players[2].money}</td>
                     </tr>
                     <tr>
-                        <th>{players[3].name}</th>
-                        <td>{(money[3]<=0) ? "Bankrupt!":money[3]}</td>
+                        <th>{state.players[3].name}</th>
+                        <td>{(state.players[3].money<=0) ? "Bankrupt!":state.players[3].money}</td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
                         <th>Round</th>
-                        <td>{round}</td>
+                        <td>{state.round}</td>
                     </tr>
                     <tr>
                         <th>Current Player</th>
-                        <td>{players[currentPlayerIndex].name}</td>
+                        <td>{state.players[state.currentPlayerIndex].name}</td>
                     </tr>
                 </tfoot>
             </table>

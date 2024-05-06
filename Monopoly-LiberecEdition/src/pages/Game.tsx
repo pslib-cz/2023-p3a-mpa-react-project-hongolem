@@ -8,29 +8,28 @@ import Styles from "./Game.module.css";
 
 const GameBoardPage: React.FC = () => {
     const { state } = useContext(GameContext);
-
-
-
+    
     return (
         <div className={Styles["game"]}>
             <div className={Styles["alignUp"]}>
-                <InfoBox players={state.players} money={[state.players[0].money, state.players[1].money, state.players[2].money, state.players[3].money]} currentPlayerIndex={state.currentPlayerIndex} round={state.round} />
+                <InfoBox />
             </div>
             <div className={Styles["board"]}>
                 {state.gameBoard.fields.map((field, index) => {
                     return (
-                        <Field key={index} index={index} field={field} />
-                    )
+                        <>
+                            <Field key={index} index={index} field={field}/>
+                        </>
+                    );
                 })}
                 <div className={Styles["textContainer"]}>
                     <p className={Styles["message"]}>
                         {state.message}
                     </p>
                 </div>
-
-            </div>
-            <ButtonBox />
         </div>
+        <ButtonBox />
+    </div>
     );
 };
 

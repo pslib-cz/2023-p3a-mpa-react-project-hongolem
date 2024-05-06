@@ -23,31 +23,31 @@
     color: var(--black);
 }
 .nameLabel.red {
-    color: red;
+    color: var(--player1);
 }
 .nameInput.red {
-    border-color: red;
+    border-color: var(--player1);
 }
 
 .nameInput.green {
-    border-color: green;
+    border-color: var(--player2);
 }
 .nameLabel.green {
-    color: green;
+    color: var(--player2);
 }
 
 .nameInput.blue {
-    border-color: blue;
+    border-color: var(--player3);
 }
 .nameLabel.blue {
-    color: blue;
+    color: var(--player3);
 }
 
 .nameInput.yellow {
-    border-color: yellow;
+    border-color: var(--player4);
 }
 .nameLabel.yellow {
-    color: yellow;
+    color: var(--player4);
 }
 
 .container {

@@ -35,10 +35,10 @@ export const GameContext = createContext<IGameContext>({} as IGameContext);
 
 const initialState: GameState = {
     players: [
-        { id: 1, name: "Player 1", money: 1500, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0},
-        { id: 2, name: "Player 2", money: 1500, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0},
-        { id: 3, name: "Player 3", money: 1500, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0},
-        { id: 4, name: "Player 4", money: 1500, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0},
+        { id: 1, name: "Player 1", money: 1500, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "red"},
+        { id: 2, name: "Player 2", money: 1500, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "green"},
+        { id: 3, name: "Player 3", money: 1500, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "blue"},
+        { id: 4, name: "Player 4", money: 1500, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "yellow"},
     ],
     currentPlayerIndex: 0,
     gameBoard: {
@@ -73,7 +73,7 @@ type Action =
 
 const reducer = (state: GameState, action: Action): GameState => {
     const newState: GameState = JSON.parse(JSON.stringify(state));
-    let currentPlayer = newState.players[newState.currentPlayerIndex];
+    const currentPlayer = newState.players[newState.currentPlayerIndex];
     let currentPlayerField = newState.gameBoard.fields[currentPlayer.position];
     function diceRoll() {
         const dice = (Math.floor(Math.random() * 6) + 1) + (Math.floor(Math.random() * 6) + 1);
@@ -108,7 +108,6 @@ const reducer = (state: GameState, action: Action): GameState => {
                 case MonopolyTypes.DISTRICT:
                     const district = currentPlayerField as DistrictType;
                     if (!district.owner) {
-                        //setAttribute("disabled", "disabled");
                         break;
                     } else if (district.owner !== currentPlayer.id) {
                         currentPlayer.money -= district.rent;
@@ -184,7 +183,6 @@ const reducer = (state: GameState, action: Action): GameState => {
                         district.owner = currentPlayer.id;
                         district.level = 1;
                         state.roundActionBool = true;
-                        console.log(state.roundActionBool)
                         state.message = `Player ${currentPlayer.id} bought ${district.text} for ${district.price} and now has ${currentPlayer.money} money left.`;
                     }
                 } else if (currentPlayerField.type === MonopolyTypes.TRAM_STOP) {
@@ -194,7 +192,6 @@ const reducer = (state: GameState, action: Action): GameState => {
                         currentPlayer.money -= tramStop.price;
                         tramStop.owner = currentPlayer.id;
                         state.roundActionBool = true;
-                        console.log(state.roundActionBool)
                         state.message = `Player ${currentPlayer.id} bought ${tramStop.text} for ${tramStop.price} and now has ${currentPlayer.money} money left.`;
                     }
                 } else if (currentPlayerField.type === MonopolyTypes.INCINERATOR) {
@@ -204,7 +201,6 @@ const reducer = (state: GameState, action: Action): GameState => {
                         currentPlayer.money -= incinerator.price;
                         incinerator.owner = currentPlayer.id;
                         state.roundActionBool = true;
-                        console.log(state.roundActionBool)
                         state.message = `Player ${currentPlayer.id} bought ${incinerator.text} for ${incinerator.price} and now has ${currentPlayer.money} money left.`;
                     }
                 } else if (currentPlayerField.type === MonopolyTypes.DAM) {
@@ -214,7 +210,6 @@ const reducer = (state: GameState, action: Action): GameState => {
                         currentPlayer.money -= dam.price;
                         dam.owner = currentPlayer.id;
                         state.roundActionBool = true;
-                        console.log(state.roundActionBool)
                         state.message = `Player ${currentPlayer.id} bought ${dam.text} for ${dam.price} and now has ${currentPlayer.money} money left.`;
                     } else {
                         state.message = "You can't buy this field. (2)";
@@ -223,9 +218,9 @@ const reducer = (state: GameState, action: Action): GameState => {
             } else {
                 state.message = "You already played this round.";
             }
+            console.log(state.players[currentPlayer.id].money)
             return newState;
         case "UPGRADE":
-            console.log(state.roundActionBool)
             if (!state.roundActionBool) {
                 if (currentPlayerField.type === MonopolyTypes.DISTRICT && currentPlayerField.owner === currentPlayer.id) {
                     const district = currentPlayerField as DistrictType;
@@ -234,7 +229,6 @@ const reducer = (state: GameState, action: Action): GameState => {
                         currentPlayer.money -= upgradePrice;
                         district.level += 1;
                         state.roundActionBool = true;
-                        console.log(state.roundActionBool)
                         state.message = `Player ${currentPlayer.id} upgraded ${district.text} to level ${district.level} for ${upgradePrice} and now has ${currentPlayer.money} money left.`;
                     } else {
                         state.message = "You can't upgrade this district.";
@@ -254,7 +248,6 @@ const reducer = (state: GameState, action: Action): GameState => {
                     }
                     district.owner = undefined;
                     state.roundActionBool = true;
-                    console.log(state.roundActionBool)
                     state.message = `Player ${currentPlayer.id} sold ${district.text} for ${district.price} and now has ${currentPlayer.money} money left.`;
                 } else {
                     state.message = "You can't sell this field.";
@@ -269,7 +262,6 @@ const reducer = (state: GameState, action: Action): GameState => {
             if (newState.currentPlayerIndex === 0) {
                 newState.round += 1;
             }
-            console.log(state.roundActionBool)
             state.message = `Player ${currentPlayer.id} ended their turn.`;
             return newState;
         case 'WIN_GAME':

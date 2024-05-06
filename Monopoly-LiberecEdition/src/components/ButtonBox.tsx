@@ -41,7 +41,7 @@ export const ButtonBox = () => {
         ) {
             dispatch({ type: 'BUY_PROPERTY' });
         } else {
-            console.log("You can't buy this field. (1)");
+            state.message = "You can't buy this field. (1)";
         }
     };
     const handleUpgrade = () => {

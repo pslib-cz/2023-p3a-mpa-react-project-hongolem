@@ -105,6 +105,7 @@ export type PlayerType = {
     incinerators: IncineratorType["id"][];
     dams: DamType["id"][];
     janitorRounds: number;
+    color: string;
 };
 
 export type GameState = {
