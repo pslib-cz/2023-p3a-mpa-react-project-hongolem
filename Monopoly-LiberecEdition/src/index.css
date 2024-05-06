@@ -1,16 +1,3 @@
 @import url(./styles/normalize.css);
 @import url(./styles/main.css);
 @import url(./styles/button.css);
-
-@media (prefers-color-scheme: light) {
-  body {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: var(--white);
-  }
-}

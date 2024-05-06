@@ -11,7 +11,7 @@ const Menu: React.FC = () => {
     };
 
     return (
-        <div>
+        <div className={Styles["menu"]}>
             <p className={Styles["title"]}>Welcome To Monopoly: Liberec Edition</p>
             <div className={Styles["container"]}>
                 <div className={Styles["inputContainer"]}>
