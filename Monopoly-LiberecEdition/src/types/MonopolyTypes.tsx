@@ -116,4 +116,5 @@ export type GameState = {
     round: number;
     roundActionBool: boolean;
     message: string;
+    moneyMessage: string;
 }
