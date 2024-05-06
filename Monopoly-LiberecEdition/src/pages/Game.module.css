@@ -1,0 +1,37 @@
+.board {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr;
+    grid-template-rows: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr;
+    background-color: var(--black);
+    height: 100%;
+    margin: 3em auto;
+    text-align: center;
+}
+
+.game {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 3em;
+    height: 100vh;
+    margin: 0 3em;
+}
+
+.alignUp {
+    align-self: flex-start;
+}
+
+.textContainer {
+    margin: 3em auto;
+    border: 1px solid var(--black);
+    border-radius: 1em;
+    background-color: var(--blue);
+    width: max-content;
+    grid-column: 1 / span 8;
+    grid-row: 2 / span 9;
+}
+
+.message {
+    font-size: 3rem;
+}

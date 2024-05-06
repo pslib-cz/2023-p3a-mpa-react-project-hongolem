@@ -1,5 +1,5 @@
 .tableContainer {
-    margin: 0 auto;
+    margin: 3em auto;
     border: 1px solid var(--black);
     border-radius: 1em;
     background-color: var(--blue);

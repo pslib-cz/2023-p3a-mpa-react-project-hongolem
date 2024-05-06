@@ -1,4 +1,3 @@
-import './App.css'
 import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route } from "react-router-dom";
 import Game from "./pages/Game.tsx";
 import Menu from "./pages/Menu.tsx";

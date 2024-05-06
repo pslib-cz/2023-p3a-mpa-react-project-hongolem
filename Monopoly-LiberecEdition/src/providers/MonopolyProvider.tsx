@@ -59,6 +59,7 @@ const initialState: GameState = {
     winner: undefined,
     round: 1,
     roundActionBool: false,
+    message: "",
 };
 
 type Action =
@@ -82,7 +83,7 @@ const reducer = (state: GameState, action: Action): GameState => {
         }
         currentPlayer.position = (currentPlayer.position + dice) % newState.gameBoard.fields.length;
         currentPlayerField = newState.gameBoard.fields[currentPlayer.position];
-        console.log(`Player ${currentPlayer.id} rolled ${dice} and landed on ${currentPlayerField.text}`)
+        state.message = `Player ${currentPlayer.id} rolled ${dice} and landed on ${currentPlayerField.text}`;
     }
     
     switch (action.type) {
@@ -94,7 +95,7 @@ const reducer = (state: GameState, action: Action): GameState => {
             return { ...state };
         case 'DICE_ROLL':
             if (currentPlayer.round > newState.round) {
-                console.log("You can't roll the dice more than once per round.");
+                state.message = "You can't roll the dice more than once per round.";
             } else {
                 if (currentPlayerField.type === MonopolyTypes.JANITOR) {
                     currentPlayer.janitorRounds += 1;
@@ -184,7 +185,7 @@ const reducer = (state: GameState, action: Action): GameState => {
                         district.level = 1;
                         state.roundActionBool = true;
                         console.log(state.roundActionBool)
-                        console.log(`Player ${currentPlayer.id} bought ${district.text} for ${district.price} and now has ${currentPlayer.money} money left.`)
+                        state.message = `Player ${currentPlayer.id} bought ${district.text} for ${district.price} and now has ${currentPlayer.money} money left.`;
                     }
                 } else if (currentPlayerField.type === MonopolyTypes.TRAM_STOP) {
                     const tramStop = currentPlayerField as TramStopType;
@@ -194,7 +195,7 @@ const reducer = (state: GameState, action: Action): GameState => {
                         tramStop.owner = currentPlayer.id;
                         state.roundActionBool = true;
                         console.log(state.roundActionBool)
-                        console.log(`Player ${currentPlayer.id} bought ${tramStop.text} for ${tramStop.price} and now has ${currentPlayer.money} money left.`)
+                        state.message = `Player ${currentPlayer.id} bought ${tramStop.text} for ${tramStop.price} and now has ${currentPlayer.money} money left.`;
                     }
                 } else if (currentPlayerField.type === MonopolyTypes.INCINERATOR) {
                     const incinerator = currentPlayerField as IncineratorType;
@@ -204,7 +205,7 @@ const reducer = (state: GameState, action: Action): GameState => {
                         incinerator.owner = currentPlayer.id;
                         state.roundActionBool = true;
                         console.log(state.roundActionBool)
-                        console.log(`Player ${currentPlayer.id} bought ${incinerator.text} for ${incinerator.price} and now has ${currentPlayer.money} money left.`)
+                        state.message = `Player ${currentPlayer.id} bought ${incinerator.text} for ${incinerator.price} and now has ${currentPlayer.money} money left.`;
                     }
                 } else if (currentPlayerField.type === MonopolyTypes.DAM) {
                     const dam = currentPlayerField as DamType;
@@ -214,13 +215,13 @@ const reducer = (state: GameState, action: Action): GameState => {
                         dam.owner = currentPlayer.id;
                         state.roundActionBool = true;
                         console.log(state.roundActionBool)
-                        console.log(`Player ${currentPlayer.id} bought ${dam.text} for ${dam.price} and now has ${currentPlayer.money} money left.`)
+                        state.message = `Player ${currentPlayer.id} bought ${dam.text} for ${dam.price} and now has ${currentPlayer.money} money left.`;
                     } else {
-                        console.log("You can't buy this field. (2)");
+                        state.message = "You can't buy this field. (2)";
                     }
                 }
             } else {
-                console.log("You already played this round.");
+                state.message = "You already played this round.";
             }
             return newState;
         case "UPGRADE":
@@ -234,13 +235,13 @@ const reducer = (state: GameState, action: Action): GameState => {
                         district.level += 1;
                         state.roundActionBool = true;
                         console.log(state.roundActionBool)
-                        console.log(`Player ${currentPlayer.id} upgraded ${district.text} to level ${district.level} for ${upgradePrice} and now has ${currentPlayer.money} money left.`)
+                        state.message = `Player ${currentPlayer.id} upgraded ${district.text} to level ${district.level} for ${upgradePrice} and now has ${currentPlayer.money} money left.`;
                     } else {
-                        console.log("You can't upgrade this district.");
+                        state.message = "You can't upgrade this district.";
                     }
                 }
             } else {
-                console.log("You already played this round.");
+                state.message = "You already played this round.";
             }
             return newState;
         case "SELL":
@@ -254,12 +255,12 @@ const reducer = (state: GameState, action: Action): GameState => {
                     district.owner = undefined;
                     state.roundActionBool = true;
                     console.log(state.roundActionBool)
-                    console.log(`Player ${currentPlayer.id} sold ${district.text} for ${district.price} and now has ${currentPlayer.money} money left.`)
+                    state.message = `Player ${currentPlayer.id} sold ${district.text} for ${district.price} and now has ${currentPlayer.money} money left.`;
                 } else {
-                    console.log("You can't sell this field.");
+                    state.message = "You can't sell this field.";
                 }
             } else {
-                console.log("You already played this round.");
+                state.message = "You already played this round.";
             }
             return newState;
         case "END_TURN":
@@ -269,7 +270,7 @@ const reducer = (state: GameState, action: Action): GameState => {
                 newState.round += 1;
             }
             console.log(state.roundActionBool)
-            console.log(`Player ${currentPlayer.id} ended their turn.`)
+            state.message = `Player ${currentPlayer.id} ended their turn.`;
             return newState;
         case 'WIN_GAME':
             const monopoles = districts.filter(district => district.monopolyId);
@@ -283,7 +284,7 @@ const reducer = (state: GameState, action: Action): GameState => {
                 }
             }
             if (tramStops.every(stop => stop.owner === currentPlayer.id) || (numberOfMonopoles >= 3) || (newState.players.filter(player => player.money <= 0).length === 3)) {
-                console.log(`Player ${currentPlayer.id} won the game!`)
+                state.message = `Player ${currentPlayer.id} won the game!`;
                 return {
                     ...newState,
                     winner: currentPlayer

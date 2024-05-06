@@ -1,0 +1,28 @@
+import {TramStopType, FieldType} from "../../types/MonopolyTypes.tsx";
+import {FC} from "react";
+import Styles from "../Field.module.css";
+
+interface TramStopFieldProps {
+    field: FieldType;
+}
+
+export const TramStopField: FC<TramStopFieldProps> = ({field}) => {
+    const tramStop = field as TramStopType;
+
+    return (
+        <>
+            <div className={Styles["field__misc"]}>
+                <p className={Styles["field__title"]}>{tramStop.text}</p>
+                <p className={Styles["field__price"]}>{tramStop.price} Kč</p>
+            </div>
+            {/*
+            <div className={Styles["field__imgBox"]}>
+                <img className={Styles["field__img"]} src={tramStop.img} alt={tramStop.text} />
+            </div>
+            */}
+
+        </>
+    );
+};
+
+export default TramStopField;
