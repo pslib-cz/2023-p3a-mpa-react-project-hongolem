@@ -8,7 +8,7 @@ Monopoly, ale Liberec edice, AKA Fügnerova, Šaldovo náměstí; Vězení -> Ho
 
 Zde budou živé linky na:
 - [Figma](https://www.figma.com/file/e0tTUWbeXNAwgOEUv4Lbgo/Untitled?type=design&node-id=0%3A1&mode=design&t=JWjWQCuOsXTyIWAQ-1)
-- odkaz na gh-pages projektu
+- odkaz na [gh-pages](https://pslib-cz.github.io/2023-p3a-mpa-react-project-hongolem/) projektu
 - odkaz do repozitáře projektu, pokud pracuji v teamu a zde vývoj neprobíhá
 
 ### Z čeho čerpat

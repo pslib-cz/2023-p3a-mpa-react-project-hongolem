@@ -73,13 +73,13 @@ type Action =
     | { type: 'WIN_GAME'; }
 
 const reducer = (state: GameState, action: Action): GameState => {
-    //variables
+    //local variables
     const newState: GameState = JSON.parse(JSON.stringify(state));
     const currentPlayer = newState.players[newState.currentPlayerIndex];
     let currentPlayerField = newState.gameBoard.fields[currentPlayer.position];
     //DiceRoll function
     function diceRoll() {
-        //variables
+        //local variables
         const dice = (Math.floor(Math.random() * 6) + 1) + (Math.floor(Math.random() * 6) + 1);
         const start = newState.gameBoard.fields.find(field => field.type === MonopolyTypes.START);
         let startReward = false;
@@ -101,13 +101,13 @@ const reducer = (state: GameState, action: Action): GameState => {
     //reducer switch
     switch (action.type) {
         case 'SET_PLAYER_NAME':
-            //variables
+            //local variables
             const player = newState.players.find(player => player.id === action.payload.playerId);
             //data change
             if (player) {
                 player.name = action.payload.name;
             }
-            return { ...newState };
+            return newState;
 
         case 'DICE_ROLL':
             //check if player already rolled the dice
@@ -129,7 +129,7 @@ const reducer = (state: GameState, action: Action): GameState => {
                 //switch case for field types upon landing
                 switch (currentPlayerField.type) {
                     case MonopolyTypes.DISTRICT:
-                        //variables
+                        //local variables
                         const district = currentPlayerField as DistrictType;
                         //check if district is owned
                         if (!district.owner) {
@@ -144,7 +144,7 @@ const reducer = (state: GameState, action: Action): GameState => {
                         break;
 
                     case MonopolyTypes.TRAM_STOP:
-                        //variables
+                        //local variables
                         const tramStop = currentPlayerField as TramStopType;
                         //check if tram stop is owned
                         if (!tramStop.owner) {
@@ -159,7 +159,7 @@ const reducer = (state: GameState, action: Action): GameState => {
                         break;
 
                     case MonopolyTypes.INCINERATOR:
-                        //variables
+                        //local variables
                         const incinerator = currentPlayerField as IncineratorType;
                         //check if incinerator is owned
                         if (!incinerator.owner) {
@@ -174,7 +174,7 @@ const reducer = (state: GameState, action: Action): GameState => {
                         break;
 
                     case MonopolyTypes.DAM:
-                        //variables
+                        //local variables
                         const dam = currentPlayerField as DamType;
                         //check if dam is owned
                         if (!dam.owner) {
@@ -189,11 +189,11 @@ const reducer = (state: GameState, action: Action): GameState => {
                         break;
 
                     case MonopolyTypes.JANITOR:
-                        //variables
+                        //local variables
                         const janitor = currentPlayerField as JanitorType;
                         //check if player already is on janitor
                         if (currentPlayer.janitorRounds > 0 && currentPlayer.janitorRounds < 4) {
-                            //variables
+                            //local variables
                             const dice1 = Math.floor(Math.random() * 6) + 1;
                             const dice2 = Math.floor(Math.random() * 6) + 1;
                             //check if player rolled doubles or is on janitor for at least 4 rounds
@@ -217,7 +217,7 @@ const reducer = (state: GameState, action: Action): GameState => {
                         break;//NEEDS TO BE IMPLEMENTED
 
                     case MonopolyTypes.TAX:
-                        //variables
+                        //local variables
                         const tax = currentPlayerField as TaxType;
                         //data change
                         newState.players[newState.currentPlayerIndex].money -= tax.price;
@@ -242,103 +242,155 @@ const reducer = (state: GameState, action: Action): GameState => {
                 newState.message = `${currentPlayer.name} went bankrupt!`;
             }
             return newState;
-        //NEEDS TO BE REWORKED
         case 'BUY_PROPERTY':
+            //check if player already played this round
             if (!state.roundActionBool) {
+                //check if field is district
                 if (currentPlayerField.type === MonopolyTypes.DISTRICT) {
+                    //local variables
                     const district = currentPlayerField as DistrictType;
+                    //check if district is owned and player has enough money
                     if (!district.owner && currentPlayer.money >= district.price) {
-                        currentPlayer.districts.push(district.id);
-                        currentPlayer.money -= district.price;
-                        district.owner = currentPlayer.id;
-                        district.level = 1;
-                        state.roundActionBool = true;
-                        state.message = `Player ${currentPlayer.id} bought ${district.text} for ${district.price} and now has ${currentPlayer.money} money left.`;
+                        //data change
+                        newState.players[newState.currentPlayerIndex].districts.push(district.id);
+                        newState.players[newState.currentPlayerIndex].money -= district.price;
+                        (newState.gameBoard.fields[currentPlayer.position] as DistrictType).owner = currentPlayer.id;
+                        (newState.gameBoard.fields[currentPlayer.position] as DistrictType).level = 1;
+                        newState.roundActionBool = true;
+                        //message change
+                        newState.message = `${currentPlayer.name} bought ${district.text}.`;
+                        newState.moneyMessage = `${currentPlayer.name} has paid ${district.price} Kč.`;
+                    } else {
+                        //message change
+                        newState.message = "You can't buy this field. You don't have enough money.";
                     }
+                //check if field is tram stop
                 } else if (currentPlayerField.type === MonopolyTypes.TRAM_STOP) {
+                    //local variables
                     const tramStop = currentPlayerField as TramStopType;
+                    //check if tram stop is owned and player has enough money
                     if (!tramStop.owner && currentPlayer.money >= tramStop.price) {
-                        currentPlayer.tramStops.push(tramStop.id);
-                        currentPlayer.money -= tramStop.price;
-                        tramStop.owner = currentPlayer.id;
-                        state.roundActionBool = true;
-                        state.message = `Player ${currentPlayer.id} bought ${tramStop.text} for ${tramStop.price} and now has ${currentPlayer.money} money left.`;
+                        //data change
+                        newState.players[newState.currentPlayerIndex].tramStops.push(tramStop.id);
+                        newState.players[newState.currentPlayerIndex].money -= tramStop.price;
+                        (newState.gameBoard.fields[currentPlayer.position] as TramStopType).owner = currentPlayer.id;
+                        newState.roundActionBool = true;
+                        //message change
+                        state.message = `${currentPlayer.name} bought ${tramStop.text}.`;
+                        newState.moneyMessage = `${currentPlayer.name} has paid ${tramStop.price} Kč.`;
+                    } else {
+                        //message change
+                        newState.message = "You can't buy this field. You don't have enough money.";
                     }
+                //check if field is incinerator
                 } else if (currentPlayerField.type === MonopolyTypes.INCINERATOR) {
+                    //local variables
                     const incinerator = currentPlayerField as IncineratorType;
+                    //check if incinerator is owned and player has enough money
                     if (!incinerator.owner && currentPlayer.money >= incinerator.price) {
-                        currentPlayer.incinerators.push(incinerator.id);
-                        currentPlayer.money -= incinerator.price;
-                        incinerator.owner = currentPlayer.id;
-                        state.roundActionBool = true;
-                        state.message = `Player ${currentPlayer.id} bought ${incinerator.text} for ${incinerator.price} and now has ${currentPlayer.money} money left.`;
+                        //data change
+                        newState.players[newState.currentPlayerIndex].incinerators.push(incinerator.id);
+                        newState.players[newState.currentPlayerIndex].money -= incinerator.price;
+                        (newState.gameBoard.fields[currentPlayer.position] as IncineratorType).owner = currentPlayer.id;
+                        newState.roundActionBool = true;
+                        //message change
+                        newState.message = `${currentPlayer.name} bought ${incinerator.text}.`;
+                        newState.moneyMessage = `${currentPlayer.name} has paid ${incinerator.price} Kč.`;
+                    } else {
+                        //message change
+                        newState.message = "You can't buy this field. You don't have enough money.";
                     }
+                //check if field is dam
                 } else if (currentPlayerField.type === MonopolyTypes.DAM) {
+                    //local variables
                     const dam = currentPlayerField as DamType;
+                    //check if dam is owned and player has enough money
                     if (!dam.owner && currentPlayer.money >= dam.price) {
-                        currentPlayer.dams.push(dam.id);
-                        currentPlayer.money -= dam.price;
-                        dam.owner = currentPlayer.id;
-                        state.roundActionBool = true;
-                        state.message = `Player ${currentPlayer.id} bought ${dam.text} for ${dam.price} and now has ${currentPlayer.money} money left.`;
+                        //data change
+                        newState.players[newState.currentPlayerIndex].dams.push(dam.id);
+                        newState.players[newState.currentPlayerIndex].money -= dam.price;
+                        (newState.gameBoard.fields[currentPlayer.position] as DamType).owner = currentPlayer.id;
+                        newState.roundActionBool = true;
+                        //message change
+                        newState.message = `${currentPlayer.name} bought ${dam.text}.`;
+                        newState.moneyMessage = `${currentPlayer.name} has paid ${dam.price} Kč.`;
+                    //check if player has enough money
                     } else {
-                        state.message = "You can't buy this field. (2)";
+                        //message change
+                        newState.message = "You can't buy this field. You don't have enough money.";
                     }
                 }
             } else {
-                state.message = "You already played this round.";
+                //message change
+                newState.message = "You already played this round.";
             }
-            console.log(state.players[currentPlayer.id].money)
             return newState;
-        //NEEDS TO BE IMPLEMENTED
+        
         case "UPGRADE":
+            //check if player already
             if (!state.roundActionBool) {
+                //check if field is district and is owned by the current player
                 if (currentPlayerField.type === MonopolyTypes.DISTRICT && currentPlayerField.owner === currentPlayer.id) {
+                    //local variables
                     const district = currentPlayerField as DistrictType;
+                    //check if player has enough money and district level is lower than 4
                     if (district.level < 4 && currentPlayer.money >= district.price) {
+                        //local variables
                         const upgradePrice = district.price/ (district.rent * 5)
-                        currentPlayer.money -= upgradePrice;
-                        district.level += 1;
-                        state.roundActionBool = true;
-                        state.message = `Player ${currentPlayer.id} upgraded ${district.text} to level ${district.level} for ${upgradePrice} and now has ${currentPlayer.money} money left.`;
+                        //data change
+                        newState.players[newState.currentPlayerIndex].money -= upgradePrice;
+                        (newState.gameBoard.fields[currentPlayer.position] as DistrictType).level += 1;
+                        newState.roundActionBool = true;
+                        //message change
+                        newState.message = `${currentPlayer.name} upgraded ${district.text} to level ${district.level}.`;
+                        newState.moneyMessage = `${currentPlayer.name} has paid ${upgradePrice} Kč.`;
                     } else {
-                        state.message = "You can't upgrade this district.";
+                        //message change
+                        newState.message = "You can't upgrade this district.";
                     }
-                }
-            } else {
-                state.message = "You already played this round.";
-            }
-            return newState;
-        //NEEDS TO BE IMPLEMENTED
-        case "SELL":
-            if (!state.roundActionBool) {
-                if (currentPlayerField.type === (MonopolyTypes.DISTRICT || MonopolyTypes.TRAM_STOP || MonopolyTypes.INCINERATOR || MonopolyTypes.DAM) && currentPlayerField.owner === currentPlayer.id) {
-                    const district = currentPlayerField as DistrictType | TramStopType | IncineratorType | DamType;
-                    currentPlayer.money += district.price;
-                    if (district.type === MonopolyTypes.DISTRICT) {
-                        district.level = 0;
-                    }
-                    district.owner = undefined;
-                    state.roundActionBool = true;
-                    state.message = `Player ${currentPlayer.id} sold ${district.text} for ${district.price} and now has ${currentPlayer.money} money left.`;
                 } else {
-                    state.message = "You can't sell this field.";
+                    //message change
+                    newState.message = "You can't upgrade this field.";
                 }
             } else {
-                state.message = "You already played this round.";
+                //message change
+                newState.message = "You already played this round.";
             }
             return newState;
-        //NEEDS TO BE IMPLEMENTED
+        
+        case "SELL": //NEEDS TO BE IMPLEMENTED
+            //check if the field is sellable and owned by the current player
+            if (currentPlayerField.type === (MonopolyTypes.DISTRICT || MonopolyTypes.TRAM_STOP || MonopolyTypes.INCINERATOR || MonopolyTypes.DAM) && currentPlayerField.owner === currentPlayer.id) {
+                //local variables
+                const sellableField = currentPlayerField as DistrictType | TramStopType | IncineratorType | DamType;
+                //data change
+                newState.players[newState.currentPlayerIndex].money += sellableField.price;
+                if (sellableField.type === MonopolyTypes.DISTRICT) {
+                    (newState.gameBoard.fields[newState.players[newState.currentPlayerIndex].position] as DistrictType).level = 0;
+                }
+                (newState.gameBoard.fields[newState.players[newState.currentPlayerIndex].position] as DistrictType | TramStopType | IncineratorType | DamType).owner = undefined;
+                //message change
+                newState.message = `${currentPlayer.name} sold ${sellableField.text}.`;
+                newState.moneyMessage = `${currentPlayer.name} has received ${sellableField.price} Kč.`;
+            } else {
+                //message change
+                newState.message = "You can't sell this field.";
+            }
+            return newState;
+        
         case "END_TURN":
+            //data change
             newState.currentPlayerIndex = (newState.currentPlayerIndex + 1) % newState.players.length;
-            state.roundActionBool = false;
+            newState.roundActionBool = false;
             if (newState.currentPlayerIndex === 0) {
                 newState.round += 1;
             }
-            state.message = `Player ${currentPlayer.id} ended their turn.`;
+            //message change
+            newState.message = `Player ${currentPlayer.id} ended their turn.`;
             return newState;
         //NEEDS TO BE IMPLEMENTED
         case 'WIN_GAME':
+            //local variables
             const monopoles = districts.filter(district => district.monopolyId);
             const playerMonopoles = districts.filter(district => district.owner === currentPlayer.id && district.monopolyId);
             let numberOfMonopoles = 0;
@@ -349,16 +401,17 @@ const reducer = (state: GameState, action: Action): GameState => {
                     }
                 }
             }
-            if (tramStops.every(stop => stop.owner === currentPlayer.id) || (numberOfMonopoles >= 3) || (newState.players.filter(player => player.money <= 0).length === 3)) {
-                state.message = `Player ${currentPlayer.id} won the game!`;
-                return {
-                    ...newState,
-                    winner: currentPlayer
-                }
+            //check if player has all tram stops or has 3 monopoles or if 3 players are bankrupt
+            if (tramStops.every(stop => stop.owner === currentPlayer.id) || (numberOfMonopoles >= 3) || ((newState.players.filter(player => player.money <= 0).length === 3) && currentPlayer.money > 0 )) {
+                //data change
+                newState.winner = currentPlayer;
+                //message change
+                newState.message = `Player ${currentPlayer.id} won the game!`;
+                return newState;
             }
             return newState;
         default:
-            return state;
+            return newState;
     }
 }
 
