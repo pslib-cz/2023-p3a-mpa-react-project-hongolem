@@ -1,5 +1,4 @@
 import React, {useContext} from 'react';
-//import {Link} from 'react-router-dom';
 import {GameContext} from '../providers/MonopolyProvider.tsx';
 import {InfoBox} from "../components/InfoBox.tsx";
 import {ButtonBox} from "../components/ButtonBox.tsx";
@@ -23,13 +22,19 @@ const GameBoardPage: React.FC = () => {
                     );
                 })}
                 <div className={Styles["textContainer"]}>
+                    <p className={Styles["moneyMessage"]}>
+                        {state.moneyMessage}
+                    </p>
                     <p className={Styles["message"]}>
                         {state.message}
                     </p>
+                    <p className={Styles["rollMessage"]}>
+                        {state.rollMessage}
+                    </p>
                 </div>
+            </div>
+            <ButtonBox/>
         </div>
-        <ButtonBox />
-    </div>
     );
 };
 

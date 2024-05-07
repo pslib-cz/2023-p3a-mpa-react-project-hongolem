@@ -61,6 +61,7 @@ const initialState: GameState = {
     roundActionBool: false,
     message: "",
     moneyMessage: "",
+    rollMessage: "",
 };
 
 type Action =
@@ -90,6 +91,7 @@ const reducer = (state: GameState, action: Action): GameState => {
         }
         //data change
         newState.players[newState.currentPlayerIndex].position = (currentPlayer.position + dice) % newState.gameBoard.fields.length;
+        newState.rollMessage = `${currentPlayer.name} rolled ${dice}`;
         //message change
         currentPlayerField = newState.gameBoard.fields[currentPlayer.position];
         newState.message = `${currentPlayer.name} rolled ${dice} and landed on ${currentPlayerField.text}`;
@@ -386,7 +388,7 @@ const reducer = (state: GameState, action: Action): GameState => {
                 newState.round += 1;
             }
             //message change
-            newState.message = `Player ${currentPlayer.id} ended their turn.`;
+            newState.message = `${newState.players[newState.currentPlayerIndex]} started their turn.`;
             return newState;
         //NEEDS TO BE IMPLEMENTED
         case 'WIN_GAME':

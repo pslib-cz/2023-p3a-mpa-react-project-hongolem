@@ -117,4 +117,5 @@ export type GameState = {
     roundActionBool: boolean;
     message: string;
     moneyMessage: string;
+    rollMessage: string;
 }

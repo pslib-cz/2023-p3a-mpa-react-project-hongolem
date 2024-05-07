@@ -1,4 +1,5 @@
 .buttonContainer {
+    align-self: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -8,5 +9,18 @@
 }
 
 .btn {
-    width: 100%;
+    width: 8em;
+}
+
+.menuButton {
+    padding: 0.5em 0;
+    text-align: center;
+    align-self: flex-end;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    height: 100%;
 }

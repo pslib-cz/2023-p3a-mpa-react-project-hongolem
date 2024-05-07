@@ -1,12 +1,12 @@
-import React, {useContext, /*useRef*/} from "react";
+import React, {useContext} from "react";
 import {DamType, DistrictType, IncineratorType, MonopolyTypes, TramStopType} from "../types/MonopolyTypes.tsx";
 import {GameContext, PurchasableFields} from "../providers/MonopolyProvider.tsx";
 import Styles from "./ButtonBox.module.css";
+import {Link} from "react-router-dom";
 
 export const ButtonBox = () => {
     const { state, dispatch } = useContext(GameContext);
     const [buttonClicked, setButtonClicked] = React.useState(false);
-    //const button = useRef<HTMLElement>(null);
     const currentPlayer = state.players[state.currentPlayerIndex];
     const currentField = state.gameBoard.fields[currentPlayer.position];
     let canUpgrade = false;
@@ -53,11 +53,18 @@ export const ButtonBox = () => {
     };
 
     return (
-        <div className={Styles["buttonContainer"]}>
-            <button onClick={handleDiceRoll} disabled={buttonClicked} className={Styles["btn"]}>DiceRoll</button>
-            <button onClick={handleBuyProperty} disabled={!buttonClicked || !canBuy} className={Styles["btn"]}>Buy</button>
-            <button onClick={handleUpgrade} disabled={!buttonClicked || !canUpgrade} className={Styles["btn"]}>Upgrade</button>
-            <button onClick={handleEndTurn} disabled={!buttonClicked} className={`red ${Styles["btn"]}`}>End Turn</button>
+        <div className={Styles["container"]}>
+            <div className={Styles["buttonContainer"]}>
+                <button onClick={handleDiceRoll} disabled={buttonClicked} className={Styles["btn"]}>DiceRoll</button>
+                <button onClick={handleBuyProperty} disabled={!buttonClicked || !canBuy} className={Styles["btn"]}>Buy
+                </button>
+                <button onClick={handleUpgrade} disabled={!buttonClicked || !canUpgrade}
+                        className={Styles["btn"]}>Upgrade
+                </button>
+                <button onClick={handleEndTurn} disabled={!buttonClicked} className={`red ${Styles["btn"]}`}>End Turn
+                </button>
+            </div>
+            <Link to="/" className={`${Styles["menuButton"]} ${Styles["btn"]}`}>Menu</Link>
         </div>
     );
 };
