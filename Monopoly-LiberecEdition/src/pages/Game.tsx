@@ -16,9 +16,7 @@ const GameBoardPage: React.FC = () => {
             <div className={Styles["board"]}>
                 {state.gameBoard.fields.map((field, index) => {
                     return (
-                        <>
-                            <Field key={index} index={index} field={field}/>
-                        </>
+                        <Field key={index} index={index} field={field}/>
                     );
                 })}
                 <div className={Styles["textContainer"]}>

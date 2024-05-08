@@ -35,10 +35,10 @@ export const GameContext = createContext<IGameContext>({} as IGameContext);
 
 const initialState: GameState = {
     players: [
-        { id: 1, name: "Player 1", money: 1500, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "red"},
-        { id: 2, name: "Player 2", money: 1500, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "green"},
-        { id: 3, name: "Player 3", money: 1500, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "blue"},
-        { id: 4, name: "Player 4", money: 1500, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "yellow"},
+        { id: 1, name: "Player 1", money: 1000, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "red"},
+        { id: 2, name: "Player 2", money: 1000, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "green"},
+        { id: 3, name: "Player 3", money: 1000, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "blue"},
+        { id: 4, name: "Player 4", money: 1000, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "yellow"},
     ],
     currentPlayerIndex: 0,
     gameBoard: {
@@ -83,22 +83,18 @@ const reducer = (state: GameState, action: Action): GameState => {
         //local variables
         const dice = (Math.floor(Math.random() * 6) + 1) + (Math.floor(Math.random() * 6) + 1);
         const start = newState.gameBoard.fields.find(field => field.type === MonopolyTypes.START);
-        let startReward = false;
         //start reward
         if (currentPlayer.position + dice >= newState.gameBoard.fields.length && start) {
             newState.players[newState.currentPlayerIndex].money += (start as StartType).reward;
-            startReward = true;
+            //message change
+            newState.moneyMessage = `${currentPlayer.name} walked through Start and received ${(start as StartType).reward} Kč.`
         }
         //data change
         newState.players[newState.currentPlayerIndex].position = (currentPlayer.position + dice) % newState.gameBoard.fields.length;
-        newState.rollMessage = `${currentPlayer.name} rolled ${dice}`;
-        //message change
         currentPlayerField = newState.gameBoard.fields[currentPlayer.position];
-        newState.message = `${currentPlayer.name} rolled ${dice} and landed on ${currentPlayerField.text}`;
-        if (startReward) {
-            newState.moneyMessage = `${currentPlayer.name} walked through Start and received ${(start as StartType).reward} Kč.`;
-            startReward = false;
-        }
+        //message change
+        newState.rollMessage = `${currentPlayer.name} rolled ${dice}`;
+        newState.message = `${currentPlayer.name} landed on ${currentPlayerField.text}`;
     }
     //reducer switch
     switch (action.type) {
@@ -118,12 +114,7 @@ const reducer = (state: GameState, action: Action): GameState => {
                 newState.message = "You can't roll the dice more than once per round.";
             } else {
                 //check if player is in jail
-                if (currentPlayerField.type === MonopolyTypes.JANITOR) {
-                    //data change
-                    newState.players[newState.currentPlayerIndex].janitorRounds += 1;
-                    //message change
-                    newState.message = `${currentPlayer.name} is with the Janitor for ${newState.players[newState.currentPlayerIndex].janitorRounds} rounds.`
-                } else {
+                if (currentPlayerField.type !== MonopolyTypes.JANITOR || currentPlayer.janitorRounds >= 3) {
                     diceRoll();
                 }
                 //data change
@@ -131,21 +122,23 @@ const reducer = (state: GameState, action: Action): GameState => {
                 //switch case for field types upon landing
                 switch (currentPlayerField.type) {
                     case MonopolyTypes.DISTRICT:
+                        console.log(newState.gameBoard.fields[currentPlayer.position]);
                         //local variables
                         const district = currentPlayerField as DistrictType;
                         //check if district is owned
                         if (!district.owner) {
                             break;
-                        } else if (district.owner !== currentPlayer.id) {
+                        } else if (district.owner !== currentPlayer.id && district.owner ) {
                             //data change
                             newState.players[newState.currentPlayerIndex].money -= district.rent;
-                            newState.players[district.owner].money += district.rent;
+                            newState.players[(district.owner as number)-1].money += district.rent;
                             //message change
-                            newState.moneyMessage = `${currentPlayer.name} paid ${district.rent} Kč to Player ${newState.players[district.owner].name}.`;
+                            newState.moneyMessage = `${currentPlayer.name} paid ${district.rent} Kč to Player ${newState.players[district.owner-1].name}.`;
                         }
                         break;
 
                     case MonopolyTypes.TRAM_STOP:
+                        console.log(newState.gameBoard.fields[currentPlayer.position]);
                         //local variables
                         const tramStop = currentPlayerField as TramStopType;
                         //check if tram stop is owned
@@ -154,13 +147,14 @@ const reducer = (state: GameState, action: Action): GameState => {
                         } else if (tramStop.owner !== currentPlayer.id) {
                             //data change
                             newState.players[newState.currentPlayerIndex].money -= tramStop.rent;
-                            newState.players[tramStop.owner].money += tramStop.rent;
+                            newState.players[(tramStop.owner as number)-1].money += tramStop.rent;
                             //message change
-                            newState.moneyMessage = `${currentPlayer.name} paid ${tramStop.rent} Kč to Player ${newState.players[tramStop.owner].name}.`;
+                            newState.moneyMessage = `${currentPlayer.name} paid ${tramStop.rent} Kč to Player ${newState.players[tramStop.owner-1].name}.`;
                         }
                         break;
 
                     case MonopolyTypes.INCINERATOR:
+                        console.log(newState.gameBoard.fields[currentPlayer.position]);
                         //local variables
                         const incinerator = currentPlayerField as IncineratorType;
                         //check if incinerator is owned
@@ -169,13 +163,14 @@ const reducer = (state: GameState, action: Action): GameState => {
                         } else if (incinerator.owner !== currentPlayer.id) {
                             //data change
                             newState.players[newState.currentPlayerIndex].money -= incinerator.rent;
-                            newState.players[incinerator.owner].money += incinerator.rent;
+                            newState.players[(incinerator.owner as number)-1].money += incinerator.rent;
                             //message change
-                            newState.moneyMessage = `${currentPlayer.name} paid ${incinerator.rent} Kč to Player ${newState.players[incinerator.owner].name}.`;
+                            newState.moneyMessage = `${currentPlayer.name} paid ${incinerator.rent} Kč to Player ${newState.players[incinerator.owner-1].name}.`;
                         }
                         break;
 
                     case MonopolyTypes.DAM:
+                        console.log(newState.gameBoard.fields[currentPlayer.position]);
                         //local variables
                         const dam = currentPlayerField as DamType;
                         //check if dam is owned
@@ -184,17 +179,22 @@ const reducer = (state: GameState, action: Action): GameState => {
                         } else if (dam.owner !== currentPlayer.id) {
                             //data change
                             newState.players[newState.currentPlayerIndex].money -= dam.rent;
-                            newState.players[dam.owner].money += dam.rent;
+                            newState.players[(dam.owner as number)-1].money += dam.rent;
                             //message change
-                            newState.moneyMessage = `${currentPlayer.name} paid ${dam.rent} Kč to Player ${newState.players[dam.owner].name}.`;
+                            newState.moneyMessage = `${currentPlayer.name} paid ${dam.rent} Kč to Player ${newState.players[dam.owner-1].name}.`;
                         }
                         break;
 
                     case MonopolyTypes.JANITOR:
+                        console.log(newState.gameBoard.fields[currentPlayer.position]);
                         //local variables
                         const janitor = currentPlayerField as JanitorType;
+                        //data change
+                        newState.players[newState.currentPlayerIndex].janitorRounds += 1;
+                        //message change
+                        newState.message = `${currentPlayer.name} is with the Janitor for ${newState.players[newState.currentPlayerIndex].janitorRounds} rounds.`
                         //check if player already is on janitor
-                        if (currentPlayer.janitorRounds > 0 && currentPlayer.janitorRounds < 4) {
+                        if (currentPlayer.janitorRounds < 4) {
                             //local variables
                             const dice1 = Math.floor(Math.random() * 6) + 1;
                             const dice2 = Math.floor(Math.random() * 6) + 1;
@@ -205,7 +205,11 @@ const reducer = (state: GameState, action: Action): GameState => {
                                 newState.players[newState.currentPlayerIndex].janitorRounds = 0;
                                 diceRoll();
                                 //message change
-                                newState.message = `${currentPlayer.name} left the Janitor.`
+                                if (dice1 == dice2) {
+                                    newState.message = `${currentPlayer.name} rolled doubles and left the Janitor.`
+                                } else {
+                                    newState.message = `${currentPlayer.name} left the Janitor.`
+                                }
                             }
                         } else {
                             //data change
@@ -216,9 +220,11 @@ const reducer = (state: GameState, action: Action): GameState => {
                         break;
 
                     case MonopolyTypes.BUS:
+                        console.log(newState.gameBoard.fields[currentPlayer.position]);
                         break;//NEEDS TO BE IMPLEMENTED
 
                     case MonopolyTypes.TAX:
+                        console.log(newState.gameBoard.fields[currentPlayer.position]);
                         //local variables
                         const tax = currentPlayerField as TaxType;
                         //data change
@@ -228,11 +234,14 @@ const reducer = (state: GameState, action: Action): GameState => {
                         break;
 
                     case MonopolyTypes.FREE_FIELD || MonopolyTypes.START:
+                        console.log(newState.gameBoard.fields[currentPlayer.position]);
                         break;
 
                     case MonopolyTypes.GAMBA:
+                        console.log(newState.gameBoard.fields[currentPlayer.position]);
                         break;//NEEDS TO BE IMPLEMENTED
                     case MonopolyTypes.DAVKY:
+                        console.log(newState.gameBoard.fields[currentPlayer.position]);
                         break;//NEEDS TO BE IMPLEMENTED
                 }
             }
@@ -338,7 +347,7 @@ const reducer = (state: GameState, action: Action): GameState => {
                     //check if player has enough money and district level is lower than 4
                     if (district.level < 4 && currentPlayer.money >= district.price) {
                         //local variables
-                        const upgradePrice = district.price/ (district.rent * 5)
+                        const upgradePrice = Math.round(district.price / 5)
                         //data change
                         newState.players[newState.currentPlayerIndex].money -= upgradePrice;
                         (newState.gameBoard.fields[currentPlayer.position] as DistrictType).level += 1;
@@ -348,15 +357,15 @@ const reducer = (state: GameState, action: Action): GameState => {
                         newState.moneyMessage = `${currentPlayer.name} has paid ${upgradePrice} Kč.`;
                     } else {
                         //message change
-                        newState.message = "You can't upgrade this district.";
+                        newState.message = "You can't upgrade this district. You don't have enough money or it's already at max level.";
                     }
                 } else {
                     //message change
-                    newState.message = "You can't upgrade this field.";
+                    newState.message = "You can't upgrade this field. It's not a district or you don't own it.";
                 }
             } else {
                 //message change
-                newState.message = "You already played this round.";
+                newState.message = "You already played this round. You already played this round.";
             }
             return newState;
         

@@ -291,13 +291,13 @@
 }
 
 .field--player1{
-    background-image: repeating-linear-gradient(135deg, transparent, transparent 10px, #f66 10px, #f66 20px);
+    background-image: repeating-linear-gradient(135deg, transparent, transparent 10px, #faa 10px, #faa 20px);
 }
 .field--player2 {
-    background-image: repeating-linear-gradient(135deg, transparent, transparent 10px, #6f6 10px, #6f6 20px);
+    background-image: repeating-linear-gradient(135deg, transparent, transparent 10px, #afa 10px, #afa 20px);
 }
 .field--player3 {
-    background-image: repeating-linear-gradient(135deg, transparent, transparent 10px, #66f 10px, #66f 20px);
+    background-image: repeating-linear-gradient(135deg, transparent, transparent 10px, #aaf 10px, #aaf 20px);
 }
 .field--player4 {
     background-image: repeating-linear-gradient(135deg, transparent, transparent 10px, #ff7 10px, #ff7 20px);
@@ -336,4 +336,29 @@
 .player4 {
     background-color: var(--player4);
     transform: translate(-100%, 0);
+}
+
+.upgrade__container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: min-content;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    gap: 0.25em;
+}
+.field--vertical .upgrade__container {
+    flex-direction: row;
+}
+.field--horizontal .upgrade__container {
+    flex-direction: column;
+}
+
+.district__level2, .district__level3, .district__level4 {
+    width: 1em;
+    height: 1em;
+    border-radius: 100vw;
+    transform: translate(-50%, -50%);
+    background-color: #000;
 }

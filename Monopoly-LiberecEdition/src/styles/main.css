@@ -38,9 +38,10 @@ body {
     background: url(../img/Monopoly-BG.jpg) no-repeat center center fixed;
 }
 
-@media screen and (max-width: 1380px) {
+@media screen and (max-width: 1520px) {
     html {
         font-size: 12px;
+        font-weight: 500;
     }
     
 }

@@ -17,6 +17,20 @@ export const DistrictField: FC<DistrictFieldProps> = ({field}) => {
                 <p className={Styles["field__title"]}>{district.text}</p>
                 <p className={Styles["field__price"]}>{district.price} Kč</p>
             </div>
+            <div className={Styles["upgrade__container"]}>
+                {
+                    (district.level > 1) &&
+                    <div className={Styles["district__level2"]} />
+                }
+                {
+                    (district.level > 2) &&
+                    <div className={Styles["district__level3"]} />
+                }
+                {
+                    (district.level > 3) &&
+                    <div className={Styles["district__level4"]} />
+                }
+            </div>
         </>
     );
 };

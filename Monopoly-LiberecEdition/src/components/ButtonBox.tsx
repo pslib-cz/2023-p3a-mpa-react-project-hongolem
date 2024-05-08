@@ -12,7 +12,7 @@ export const ButtonBox = () => {
     let canUpgrade = false;
     if (currentField.type === MonopolyTypes.DISTRICT) {
         const district = currentField as DistrictType;
-        canUpgrade = district.owner === currentPlayer.id && currentPlayer.money >=  (district.price/(district.rent * 5)) && district.level < 4  && !state.roundActionBool;
+        canUpgrade = district.owner === currentPlayer.id && currentPlayer.money >=  (district.price/(district.rent * 5)) && !(district.level === 4)  && !state.roundActionBool;
     }
     let canBuy = false;
     if (PurchasableFields.includes(currentField.type)) {
@@ -41,7 +41,7 @@ export const ButtonBox = () => {
         ) {
             dispatch({ type: 'BUY_PROPERTY' });
         } else {
-            state.message = "You can't buy this field. (1)";
+            state.message = "You can't buy this field. It's not for sale.";
         }
     };
     const handleUpgrade = () => {
