@@ -53,7 +53,7 @@ export const ButtonBox = () => {
     };
 
     return (
-        <div className={Styles["container"]}>
+        <div className={`${Styles["container"]} ${Styles["containerFullHeight"]}`}>
             <div className={Styles["buttonContainer"]}>
                 <button onClick={handleDiceRoll} disabled={buttonClicked} className={Styles["btn"]}>DiceRoll</button>
                 <button onClick={handleBuyProperty} disabled={!buttonClicked || !canBuy} className={Styles["btn"]}>Buy

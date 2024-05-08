@@ -388,7 +388,7 @@ const reducer = (state: GameState, action: Action): GameState => {
                 newState.round += 1;
             }
             //message change
-            newState.message = `${newState.players[newState.currentPlayerIndex]} started their turn.`;
+            newState.message = `${newState.players[newState.currentPlayerIndex].name} started their turn.`;
             return newState;
         //NEEDS TO BE IMPLEMENTED
         case 'WIN_GAME':

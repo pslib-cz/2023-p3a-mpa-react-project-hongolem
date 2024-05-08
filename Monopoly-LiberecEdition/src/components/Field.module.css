@@ -302,3 +302,38 @@
 .field--player4 {
     background-image: repeating-linear-gradient(135deg, transparent, transparent 10px, #ff7 10px, #ff7 20px);
 }
+
+.player {
+    width: 2em;
+    height: 2em;
+    border-radius: 100vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+}
+
+.player--active {
+    opacity: 1;
+}
+
+.player1 {
+    background-color: var(--player1);
+    transform: translate(0, 0);
+}
+
+.player2 {
+    background-color: var(--player2);
+    transform: translate(-100%, -100%);
+}
+
+.player3 {
+    background-color: var(--player3);
+    transform: translate(0, -100%);
+}
+
+.player4 {
+    background-color: var(--player4);
+    transform: translate(-100%, 0);
+}

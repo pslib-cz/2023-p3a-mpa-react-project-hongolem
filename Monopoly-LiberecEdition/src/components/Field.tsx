@@ -60,6 +60,7 @@ type FieldState = "horizontal" | "vertical" | "corner";
 
 export const Field: FC<FieldProps> = ({index, field}) => {
     const {state} = useContext(GameContext);
+    const players = state.players.filter(player => player.position === index);
     const fieldState: FieldState = index % 10 === 0 ? "corner" : Math.floor(index / 10) % 2 === 0 ? "vertical" : "horizontal";
     const owner = state.players.find(player => (
         (field as DistrictType | TramStopType | IncineratorType | DamType).owner === player.id
@@ -73,6 +74,14 @@ export const Field: FC<FieldProps> = ({index, field}) => {
     return (
         <div className={`${Styles["field"]} ${Styles[`field--${fieldState}`]} ${Styles[`${ownerString}`]}`}>
             {renderField(field)}
+            {players.map((player, index) => {
+                return (
+                    <div
+                        key={index}
+                        className={`${Styles["player"]} ${Styles["player"+(player.id)]} ${(state.currentPlayerIndex+1 === player.id) ? `${Styles["player--active"]}` : ""}`}
+                    />
+                );
+            })}
         </div>
     );
 };
