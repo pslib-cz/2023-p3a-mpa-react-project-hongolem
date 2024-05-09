@@ -106,6 +106,7 @@ export type PlayerType = {
     dams: DamType["id"][];
     janitorRounds: number;
     color: string;
+    bankrupt: boolean;
 };
 
 export type GameState = {

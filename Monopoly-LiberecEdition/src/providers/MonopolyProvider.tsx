@@ -35,10 +35,10 @@ export const GameContext = createContext<IGameContext>({} as IGameContext);
 
 const initialState: GameState = {
     players: [
-        { id: 1, name: "Player 1", money: 1000, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "red"},
-        { id: 2, name: "Player 2", money: 1000, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "green"},
-        { id: 3, name: "Player 3", money: 1000, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "blue"},
-        { id: 4, name: "Player 4", money: 1000, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "yellow"},
+        { id: 1, name: "Player 1", money: 1000, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "red", bankrupt: false},
+        { id: 2, name: "Player 2", money: 0, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "green", bankrupt: false},
+        { id: 3, name: "Player 3", money: 1000, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "blue", bankrupt: false},
+        { id: 4, name: "Player 4", money: 1000, position: 0, round: 1, districts: [], tramStops: [], incinerators: [], dams: [], janitorRounds: 0, color: "yellow", bankrupt: false},
     ],
     currentPlayerIndex: 0,
     gameBoard: {
@@ -245,14 +245,8 @@ const reducer = (state: GameState, action: Action): GameState => {
                         break;//NEEDS TO BE IMPLEMENTED
                 }
             }
-            //check if player is bankrupt
-            if (currentPlayer.money <= 0) {
-                //data change
-                newState.players = newState.players.filter(player => player.id !== currentPlayer.id);
-                //message change
-                newState.message = `${currentPlayer.name} went bankrupt!`;
-            }
             return newState;
+
         case 'BUY_PROPERTY':
             //check if player already played this round
             if (!state.roundActionBool) {
@@ -394,12 +388,24 @@ const reducer = (state: GameState, action: Action): GameState => {
             return newState;
         
         case "END_TURN":
-            //data change
-            newState.currentPlayerIndex = (newState.currentPlayerIndex + 1) % newState.players.length;
-            newState.roundActionBool = false;
-            if (newState.currentPlayerIndex === 0) {
-                newState.round += 1;
+            //check if player is bankrupt
+            if (currentPlayer.money <= 0) {
+                //data change
+                newState.players[newState.currentPlayerIndex].bankrupt = true;
+                //message change
+                console.log(newState.players[newState.currentPlayerIndex].name);
+                console.log(newState.players[newState.currentPlayerIndex].bankrupt);
+                newState.message = `${currentPlayer.name} went bankrupt!`;
             }
+            //while loop for changing players
+            do {
+                //data change
+                newState.currentPlayerIndex = (newState.currentPlayerIndex + 1) % newState.players.length;
+                newState.roundActionBool = false;
+                if (newState.currentPlayerIndex === 0) {
+                    newState.round += 1;
+                }
+            } while (newState.players[newState.currentPlayerIndex].bankrupt);
             //message change
             newState.message = `${newState.players[newState.currentPlayerIndex].name} started their turn.`;
             return newState;
