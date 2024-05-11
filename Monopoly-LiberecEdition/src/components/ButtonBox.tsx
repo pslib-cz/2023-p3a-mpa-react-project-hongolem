@@ -13,7 +13,7 @@ export const ButtonBox = () => {
     let canUpgrade = false;
     if (currentField.type === MonopolyTypes.DISTRICT) {
         const district = currentField as DistrictType;
-        canUpgrade = district.owner === currentPlayer.id && currentPlayer.money >=  (district.price/(district.rent * 5)) && !(district.level === 4)  && !state.roundActionBool;
+        canUpgrade = district.owner === currentPlayer.id && currentPlayer.money >= (district.price/2) && !(district.level === 4)  && !state.roundActionBool;
     }
     let canBuy = false;
     if (PurchasableFields.includes(currentField.type)) {
