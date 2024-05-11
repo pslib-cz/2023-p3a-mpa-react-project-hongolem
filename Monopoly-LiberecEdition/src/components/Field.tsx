@@ -78,7 +78,11 @@ export const Field: FC<FieldProps> = ({index, field}) => {
                 return (
                     <div
                         key={index}
-                        className={`${Styles["player"]} ${Styles["player"+(player.id)]} ${(state.currentPlayerIndex+1 === player.id) ? `${Styles["player--active"]}` : ""}`}
+                        className={`
+                            ${Styles["player"]}
+                            ${Styles["player"+(player.id)]}
+                            ${(state.currentPlayerIndex+1 === player.id) ? `${Styles["player--active"]}` : ""}
+                            ${(player.bankrupt) ? `${Styles["bankrupt"]}` : ""}`}
                     />
                 );
             })}

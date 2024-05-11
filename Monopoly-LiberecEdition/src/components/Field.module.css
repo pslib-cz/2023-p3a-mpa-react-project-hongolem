@@ -335,6 +335,11 @@
     transform: translate(-100%, 0);
 }
 
+.bankrupt {
+    display: none;
+    opacity: 1;
+}
+
 .upgrade__container {
     display: flex;
     justify-content: space-around;

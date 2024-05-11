@@ -1,12 +1,13 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {DamType, DistrictType, IncineratorType, MonopolyTypes, TramStopType} from "../types/MonopolyTypes.tsx";
 import {GameContext, PurchasableFields} from "../providers/MonopolyProvider.tsx";
 import Styles from "./ButtonBox.module.css";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export const ButtonBox = () => {
     const { state, dispatch } = useContext(GameContext);
     const [buttonClicked, setButtonClicked] = React.useState(false);
+    const navigate = useNavigate();
     const currentPlayer = state.players[state.currentPlayerIndex];
     const currentField = state.gameBoard.fields[currentPlayer.position];
     let canUpgrade = false;
@@ -19,6 +20,12 @@ export const ButtonBox = () => {
         const purchasableField = currentField as DistrictType | TramStopType | DamType | IncineratorType;
         canBuy = purchasableField.owner === undefined && currentPlayer.money >= purchasableField.price && !state.roundActionBool;
     }
+
+    useEffect(() => {
+        if (state.winner) {
+            navigate("/Winner");
+        }
+    }, [state.winner]);
 
     const handleClick = () => {
         setButtonClicked(!buttonClicked);

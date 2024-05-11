@@ -31,7 +31,7 @@ const Menu: React.FC = () => {
                     <input className={`${Styles.nameInput} ${Styles.yellow}`} type={"text"} defaultValue={"Player4"} max={25} placeholder={"Name"} onChange={(name) => handleNameChange(4, name.target.value)}/>
                 </div>
             </div>
-            <Link to="/Game">Play</Link>
+            <Link to={"/Game"}>Play</Link>
         </div>
     );
 }

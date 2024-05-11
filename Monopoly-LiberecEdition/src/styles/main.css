@@ -35,7 +35,8 @@ body {
     margin: 0;
     place-items: center;
     min-width: 320px;
-    background: url(../img/Monopoly-BG.jpg) no-repeat center center fixed;
+    background: url(../img/Monopoly-BG.jpg) no-repeat fixed;
+    background-size: cover;
 }
 
 @media screen and (max-width: 1520px) {

@@ -119,4 +119,5 @@ export type GameState = {
     message: string;
     moneyMessage: string;
     rollMessage: string;
+    bankruptMessage: string;
 }
