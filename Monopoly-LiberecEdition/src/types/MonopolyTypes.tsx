@@ -37,39 +37,32 @@ export type TramStopType = FieldType & {
     price: number;
     rent: number;
     owner?: PlayerType["id"];
-    img: string;
 };
 
 export type JanitorType = FieldType & {
     type: MonopolyTypes.JANITOR;
     players: number[];
-    img: string;
 };
 
 export type GambaType = FieldType & {
     type: MonopolyTypes.GAMBA;
-    img: string;
 };
 
 export type DavkyType = FieldType & {
     type: MonopolyTypes.DAVKY;
-    img: string;
 };
 
 export type FreeFieldType = FieldType & {
     type: MonopolyTypes.FREE_FIELD;
-    img: string;
 };
 
 export type BusType = FieldType & {
     type: MonopolyTypes.BUS;
-    img: string;
 };
 
 export type TaxType = FieldType & {
     type: MonopolyTypes.TAX;
     price: number;
-    img: string;
 };
 
 export type IncineratorType = FieldType & {
@@ -77,7 +70,6 @@ export type IncineratorType = FieldType & {
     price: number;
     rent: number;
     owner?: PlayerType["id"];
-    img: string;
 };
 
 export type DamType = FieldType & {
@@ -85,13 +77,11 @@ export type DamType = FieldType & {
     price: number;
     rent: number;
     owner?: PlayerType["id"];
-    img: string;
 };
 
 export type StartType = FieldType & {
     type: MonopolyTypes.START;
     reward: number;
-    img: string;
 };
 
 export type PlayerType = {

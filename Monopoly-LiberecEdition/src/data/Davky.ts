@@ -43,7 +43,7 @@ export const DavkyCards: GambaDavkyCard[] = [
     },
     {
         id: 11,
-        text: "Life insurance matures – collect 100 Kč",
+        text: "Life insurance matures – collect 100 000 Kč",
     },
     {
         id: 12,

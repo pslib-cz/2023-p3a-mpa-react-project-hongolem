@@ -21,7 +21,6 @@ import JanitorField from "./Fields/JanitorField.tsx";
 import FreeField from "./Fields/FreeField.tsx";
 import BusField from "./Fields/BusField.tsx";
 
-
 interface FieldProps {
     index: number;
     field: FieldType;
@@ -81,7 +80,7 @@ export const Field: FC<FieldProps> = ({index, field}) => {
         <div onClick={() => {const currentPlayer = state.players[state.currentPlayerIndex];
             if (!isStandingOnBusField) return;
             if (playedThisRound) return;
-            if (!isFieldHoverable) {return;}
+            if (!isFieldHoverable) return;
             dispatch({ type: 'BUS_TRAVEL', payload: {playerId: currentPlayer.id-1, fieldId: field.id}});
             button.setButtonClicked(!button.buttonClicked);}} className={`${Styles["field"]} ${Styles[`field--${fieldState}`]} ${Styles[`${ownerString}`]} ${(isStandingOnBusField && !playedThisRound && isFieldHoverable)?Styles["field--hover"]:""}`}>
             {renderField(field)}

@@ -254,7 +254,6 @@ export const tramStops: TramStopType[] = [
         price: 200,
         rent: 50,
         owner: undefined,
-        img: "",
     },
     {
         type: MonopolyTypes.TRAM_STOP,
@@ -263,7 +262,6 @@ export const tramStops: TramStopType[] = [
         price: 200,
         rent: 50,
         owner: undefined,
-        img: "",
     },
     {
         type: MonopolyTypes.TRAM_STOP,
@@ -272,7 +270,6 @@ export const tramStops: TramStopType[] = [
         price: 200,
         rent: 50,
         owner: undefined,
-        img: "",
     },
     {
         type: MonopolyTypes.TRAM_STOP,
@@ -281,42 +278,38 @@ export const tramStops: TramStopType[] = [
         price: 200,
         rent: 50,
         owner: undefined,
-        img: "",
     },
 ];
 
 export const janitor: JanitorType = {
     type: MonopolyTypes.JANITOR, 
     id: 10,
-    text: "Janitor",
-    players: [],
-    img: "",
+    text: "Školník Dalibor",
+    players: []
 };
 
 export const gamby: GambaType[] = [
-    { type: MonopolyTypes.GAMBA, id: 7, text: "Gamba", img: "" },
-    { type: MonopolyTypes.GAMBA, id: 22, text: "Gamba", img: "" },
-    { type: MonopolyTypes.GAMBA, id: 36, text: "Gamba", img: "" },
+    { type: MonopolyTypes.GAMBA, id: 7, text: "Gamba" },
+    { type: MonopolyTypes.GAMBA, id: 22, text: "Gamba" },
+    { type: MonopolyTypes.GAMBA, id: 36, text: "Gamba" },
 ];
 
 export const davky: DavkyType[] = [
-    { type: MonopolyTypes.DAVKY, id: 2, text: "Davky", img: "" },
-    { type: MonopolyTypes.DAVKY, id: 17, text: "Davky", img: "" },
-    { type: MonopolyTypes.DAVKY, id: 33, text: "Davky", img: "" },
+    { type: MonopolyTypes.DAVKY, id: 2, text: "Dávky" },
+    { type: MonopolyTypes.DAVKY, id: 17, text: "Dávky" },
+    { type: MonopolyTypes.DAVKY, id: 33, text: "Dávky" },
 ];
 
 export const busStation: FreeFieldType = {
     type: MonopolyTypes.FREE_FIELD,
     id: 20,
     text: "Fügnerka",
-    img: "",
 };
 
 export const bus: BusType = {
     type: MonopolyTypes.BUS,
     id: 30,
     text: "Bus",
-    img: "",
 };
 
 export const tax: TaxType[] = [{
@@ -324,7 +317,6 @@ export const tax: TaxType[] = [{
     id: 38,
     text: "Finančák",
     price: 100,
-    img: "",
 }];
 
 export const incinerator: IncineratorType[] = [{
@@ -334,7 +326,6 @@ export const incinerator: IncineratorType[] = [{
     price: 250,
     rent: 50,
     owner: undefined,
-    img: "",
 }];
 
 export const dam: DamType[] = [{
@@ -344,7 +335,6 @@ export const dam: DamType[] = [{
     price: 250,
     rent: 50,
     owner: undefined,
-    img: "",
 }];
 
 export const start: StartType = {
@@ -352,5 +342,4 @@ export const start: StartType = {
     id: 0,
     text: "Start",
     reward: 100,
-    img: "./img/start.png",
 };
