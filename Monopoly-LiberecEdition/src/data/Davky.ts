@@ -1,100 +1,68 @@
-import {DavkyType, MonopolyTypes} from "../types/MonopolyTypes.tsx";
+import {GambaDavkyCard} from "../types/MonopolyTypes.tsx";
 
-export const DavkyCards: DavkyType[] = [
+export const DavkyCards: GambaDavkyCard[] = [
     {
-        type: MonopolyTypes.DAVKY,
         id: 1,
-        text: "Advance to Start (Collect $200)",
-        img: ""
+        text: "Advance to Start",
     },
     {
-        type: MonopolyTypes.DAVKY,
         id: 2,
-        text: "Bank error in your favor – collect $200",
-        img: ""
+        text: "Bank error in your favor – collect 200 000 Kč",
     },
     {
-        type: MonopolyTypes.DAVKY,
         id: 3,
-        text: "Doctor's fees – Pay $50",
-        img: ""
+        text: "Doctor's fees – Pay 50 000 Kč",
     },
     {
-        type: MonopolyTypes.DAVKY,
         id: 4,
-        text: "From sale of stock you get $50",
-        img: ""
+        text: "From sale of stock you get 50 000 Kč",
     },
     {
-        type: MonopolyTypes.DAVKY,
         id: 5,
-        text: "Get Out of Jail Free – this card may be kept until needed, or sold",
-        img: ""
+        text: "The finance office orders you to pay 100 000 Kč",
     },
     {
-        type: MonopolyTypes.DAVKY,
         id: 6,
-        text: "Go to Jail – go directly to jail – Do not pass Start, do not collect $200",
-        img: ""
+        text: "Go to the Janitor.",
     },
     {
-        type: MonopolyTypes.DAVKY,
         id: 7,
-        text: "Grand Opera Night – collect $50 from every player for opening night seats",
-        img: ""
+        text: "Grand Opera Night – collect 50 000 Kč from every player for opening night seats",
     },
     {
-        type: MonopolyTypes.DAVKY,
         id: 8,
-        text: "Holiday Fund matures - Receive $100",
-        img: ""
+        text: "Holiday Fund matures - Receive 100 000 Kč",
     },
     {
-        type: MonopolyTypes.DAVKY,
         id: 9,
-        text: "Income tax refund – collect $20",
-        img: ""
+        text: "Income tax refund – collect 20 000 Kč",
     },
     {
-        type: MonopolyTypes.DAVKY,
         id: 10,
-        text: "It is your birthday Collect $10 from each player",
-        img: ""
+        text: "It is your birthday Collect 10 000 Kč from each player",
     },
     {
-        type: MonopolyTypes.DAVKY,
         id: 11,
-        text: "Life insurance matures – collect $100",
-        img: ""
+        text: "Life insurance matures – collect 100 Kč",
     },
     {
-        type: MonopolyTypes.DAVKY,
         id: 12,
-        text: "Hospital Fees – Pay $100",
-        img: ""
+        text: "Hospital Fees – Pay 100 000 Kč",
     },
     {
-        type: MonopolyTypes.DAVKY,
         id: 13,
-        text: "School fees – Pay $50",
-        img: ""
+        text: "School fees – Pay 50 000 Kč",
     },
     {
-        type: MonopolyTypes.DAVKY,
         id: 14,
-        text: "Receive $25 consultancy fee",
-        img: ""
+        text: "Receive 25 000 Kč consultancy fee.",
     },
     {
-        type: MonopolyTypes.DAVKY,
         id: 15,
-        text: "You are assessed for street repairs – $40 per house, $115 per hotel",
-        img: ""
+        text: "You are assessed for street repairs – 40 000 Kč per district owned.",
     },
     {
-        type: MonopolyTypes.DAVKY,
         id: 16,
-        text: "You have won second prize in a beauty contest– collect $20",
-        img: ""
+        text: "You have won second prize in a beauty contest– collect 20 000 Kč",
     }
 ];

@@ -59,20 +59,31 @@ const renderField = (field: FieldType) => {
 type FieldState = "horizontal" | "vertical" | "corner";
 
 export const Field: FC<FieldProps> = ({index, field}) => {
-    const {state} = useContext(GameContext);
+    const {state, dispatch, button} = useContext(GameContext);
     const players = state.players.filter(player => player.position === index);
     const fieldState: FieldState = index % 10 === 0 ? "corner" : Math.floor(index / 10) % 2 === 0 ? "vertical" : "horizontal";
     const owner = state.players.find(player => (
         (field as DistrictType | TramStopType | IncineratorType | DamType).owner === player.id
     ));
     let ownerString = "";
+    const isStandingOnBusField = state.gameBoard.fields[state.players[state.currentPlayerIndex].position].type === MonopolyTypes.BUS;
+    const playedThisRound = state.players[state.currentPlayerIndex].round > state.round;
+    const isFieldHoverable = state.gameBoard.fields.filter(field => {
+        return (field.type === MonopolyTypes.DISTRICT || field.type === MonopolyTypes.TRAM_STOP || field.type === MonopolyTypes.INCINERATOR || field.type === MonopolyTypes.DAM)
+            && ((!(field as DamType | IncineratorType | TramStopType | DistrictType).owner)
+                || (field as DamType | IncineratorType | TramStopType | DistrictType).owner === state.players[state.currentPlayerIndex].id)}).includes(state.gameBoard.fields[field.id])
 
     if (owner) {
         ownerString = `field--player${owner.id}`;
     }
     
     return (
-        <div className={`${Styles["field"]} ${Styles[`field--${fieldState}`]} ${Styles[`${ownerString}`]}`}>
+        <div onClick={() => {const currentPlayer = state.players[state.currentPlayerIndex];
+            if (!isStandingOnBusField) return;
+            if (playedThisRound) return;
+            if (!isFieldHoverable) {return;}
+            dispatch({ type: 'BUS_TRAVEL', payload: {playerId: currentPlayer.id-1, fieldId: field.id}});
+            button.setButtonClicked(!button.buttonClicked);}} className={`${Styles["field"]} ${Styles[`field--${fieldState}`]} ${Styles[`${ownerString}`]} ${(isStandingOnBusField && !playedThisRound && isFieldHoverable)?Styles["field--hover"]:""}`}>
             {renderField(field)}
             {players.map((player, index) => {
                 return (

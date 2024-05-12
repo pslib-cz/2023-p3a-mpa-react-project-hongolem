@@ -121,3 +121,13 @@ export type GameState = {
     rollMessage: string;
     bankruptMessage: string;
 }
+
+export type GambaDavkyCard = {
+    id: number;
+    text: string;
+}
+
+export type BusTravelType = {
+    playerId: number;
+    fieldId: number;
+}

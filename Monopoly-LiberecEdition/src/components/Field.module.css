@@ -364,3 +364,27 @@
     transform: translate(-50%, -50%);
     background-color: #000;
 }
+
+.tooltipText {
+    visibility: hidden;
+    padding: 0 1em;
+    background-color: var(--black);
+    color: var(--white);
+    text-align: left;
+    border: 1px solid var(--white);
+    border-radius: 0.5em;
+    white-space: nowrap;
+    position: absolute;
+    z-index: 1;
+    top: 10%;
+    left: 80%;
+}
+
+.field:hover .tooltipText {
+    visibility: visible;
+    transition-delay: 0.3s;
+}
+
+.field--hover:hover {
+    border: 3px solid var(--black);
+}

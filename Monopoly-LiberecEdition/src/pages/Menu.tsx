@@ -4,11 +4,17 @@ import Styles from "./Menu.module.css";
 import {GameContext} from "../providers/MonopolyProvider.tsx";
 
 const Menu: React.FC = () => {
-    const { dispatch } = useContext(GameContext);
+    const { dispatch, button } = useContext(GameContext);
 
     const handleNameChange = (playerId: number, newName: string) => {
         dispatch({ type: 'SET_PLAYER_NAME', payload: { playerId, name: newName } });
     };
+
+    const handleReset = () => {
+        dispatch({ type: 'RESET' });
+        button.setButtonClicked(false);
+    };
+
 
     return (
         <div className={Styles["menu"]}>
@@ -31,7 +37,11 @@ const Menu: React.FC = () => {
                     <input className={`${Styles.nameInput} ${Styles.yellow}`} type={"text"} defaultValue={"Player4"} max={25} placeholder={"Name"} onChange={(name) => handleNameChange(4, name.target.value)}/>
                 </div>
             </div>
-            <Link to={"/Game"}>Play</Link>
+            <div className={Styles["buttonBox"]}>
+                <Link to={"/Game"}>Play</Link>
+                <button onClick={handleReset}>Reset</button>
+            </div>
+
         </div>
     );
 }

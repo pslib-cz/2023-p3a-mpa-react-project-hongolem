@@ -13,14 +13,16 @@ export const DamField: FC<DamFieldProps> = ({field}) => {
         <>
             <div className={Styles["field__misc"]}>
                 <p className={Styles["field__title"]}>{dam.text}</p>
-                <p className={Styles["field__price"]}>{dam.price} Kč</p>
+                <p className={Styles["field__price"]}>{dam.price} 000 Kč</p>
             </div>
             {/*
             <div className={Styles["field__imgBox"]}>
                 <img className={Styles["field__img"]} src={dam.img} alt={dam.text} />
             </div>
             */}
-
+            <div className={Styles["tooltipText"]}>
+                <p>Rent: {dam.rent} 000 Kč</p>
+            </div>
         </>
     );
 };

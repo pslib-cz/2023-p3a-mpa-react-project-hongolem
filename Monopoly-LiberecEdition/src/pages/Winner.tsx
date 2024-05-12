@@ -1,17 +1,23 @@
 import {Link, Navigate} from 'react-router-dom';
-import {useContext} from "react";
+import {FC, useContext} from "react";
 import {GameContext} from "../providers/MonopolyProvider.tsx";
+import Styles from "./Winner.module.css";
 
-const Winner: React.FC = () => {
-    const { state } = useContext(GameContext);
+const Winner: FC = () => {
+    const { dispatch, state, button } = useContext(GameContext);
+
+    const handleReset = () => {
+        dispatch({ type: 'RESET' });
+        button.setButtonClicked(false);
+    };
 
     return (
-        <div>
+        <div className={Styles["winBox"]}>
             {
                 !state.winner && <Navigate to={"/"} />
             }
-            <h1>Winner {state.winner?.name}</h1>
-            <Link to="/">Back to Menu</Link>
+            <p className={Styles["winText"]}>💸💸💸The Winner is {state.winner?.name}!💸💸💸</p>
+            <Link onClick={handleReset} to="/">Back to Menu</Link>
         </div>
     );
 }

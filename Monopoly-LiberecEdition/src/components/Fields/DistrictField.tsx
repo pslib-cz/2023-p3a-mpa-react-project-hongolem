@@ -15,7 +15,7 @@ export const DistrictField: FC<DistrictFieldProps> = ({field}) => {
             <div className={`${Styles["field__top"]} ${Styles[`field__top--mnpl${district.monopolyId}`]}`}/>
             <div className={Styles["field__bottom"]}>
                 <p className={Styles["field__title"]}>{district.text}</p>
-                <p className={Styles["field__price"]}>{district.price} Kč</p>
+                <p className={Styles["field__price"]}>{district.price} 000 Kč</p>
             </div>
             <div className={Styles["upgrade__container"]}>
                 {
@@ -30,6 +30,10 @@ export const DistrictField: FC<DistrictFieldProps> = ({field}) => {
                     (district.level > 3) &&
                     <div className={Styles["district__level4"]} />
                 }
+            </div>
+            <div className={Styles["tooltipText"]}>
+                <p>Rent: {district.rent} 000 Kč</p>
+                <p>Upgrade: {Math.round(district.price / 2)} 000 Kč</p>
             </div>
         </>
     );

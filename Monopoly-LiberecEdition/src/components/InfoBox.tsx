@@ -17,19 +17,19 @@ export const InfoBox: FC = () => {
                 <tbody>
                     <tr>
                         <th>{state.players[0].name}</th>
-                        <td>{(state.players[0].money<=0) ? "Bankrupt!":state.players[0].money}</td>
+                        <td>{(state.players[0].money<=0) ? "Bankrupt!":(state.players[0].money + " 000 Kč")}</td>
                     </tr>
                     <tr>
                         <th>{state.players[1].name}</th>
-                        <td>{(state.players[1].money<=0) ? "Bankrupt!":state.players[1].money}</td>
+                        <td>{(state.players[1].money<=0) ? "Bankrupt!":(state.players[1].money + " 000 Kč")}</td>
                     </tr>
                     <tr>
                         <th>{state.players[2].name}</th>
-                        <td>{(state.players[2].money<=0) ? "Bankrupt!":state.players[2].money}</td>
+                        <td>{(state.players[2].money<=0) ? "Bankrupt!":(state.players[2].money + " 000 Kč")}</td>
                     </tr>
                     <tr>
                         <th>{state.players[3].name}</th>
-                        <td>{(state.players[3].money<=0) ? "Bankrupt!":state.players[3].money}</td>
+                        <td>{(state.players[3].money<=0) ? "Bankrupt!":(state.players[3].money + " 000 Kč")}</td>
                     </tr>
                 </tbody>
                 <tfoot>

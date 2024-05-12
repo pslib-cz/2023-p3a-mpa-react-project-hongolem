@@ -70,3 +70,9 @@
     margin-top: 1em;
     color: var(--blue);
 }
+
+.buttonBox{
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+}

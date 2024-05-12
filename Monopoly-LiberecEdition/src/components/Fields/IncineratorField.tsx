@@ -13,14 +13,16 @@ export const IncineratorField: FC<IncineratorFieldProps> = ({field}) => {
         <>
             <div className={Styles["field__misc"]}>
                 <p className={Styles["field__title"]}>{incinerator.text}</p>
-                <p className={Styles["field__price"]}>{incinerator.price} Kč</p>
+                <p className={Styles["field__price"]}>{incinerator.price} 000 Kč</p>
             </div>
             {/*
             <div className={Styles["field__imgBox"]}>
                 <img className={Styles["field__img"]} src={incinerator.img} alt={incinerator.text} />
             </div>
             */}
-
+            <div className={Styles["tooltipText"]}>
+                <p>Rent: {incinerator.rent} 000 Kč</p>
+            </div>
         </>
     );
 };
