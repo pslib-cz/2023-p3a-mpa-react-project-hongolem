@@ -39,6 +39,7 @@ const Menu: React.FC = () => {
             </div>
             <div className={Styles["buttonBox"]}>
                 <Link to={"/Game"}>Play</Link>
+                <Link to={"/Rules"}>Rules</Link>
                 <button onClick={handleReset}>Reset</button>
             </div>
 
