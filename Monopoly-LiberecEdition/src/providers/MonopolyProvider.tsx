@@ -328,7 +328,6 @@ const reducer = (state: GameState, action: Action): GameState => {
 
                         case MonopolyTypes.GAMBA:
                             const gambaCard = GambaCards[Math.floor(Math.random() * GambaCards.length)];
-                            console.log(gambaCard.text);
                             newState.message = `${gambaCard.text}`;
                             switch (gambaCard.id) {
                                 case 1:
@@ -412,7 +411,6 @@ const reducer = (state: GameState, action: Action): GameState => {
                             return newState;
                         case MonopolyTypes.DAVKY:
                             const davkyCard = DavkyCards[Math.floor(Math.random() * GambaCards.length)];
-                            console.log(davkyCard.text);
                             newState.message = `${davkyCard.text}`;
                             switch (davkyCard.id) {
                                 case 1:
@@ -648,7 +646,6 @@ const reducer = (state: GameState, action: Action): GameState => {
             //check if player is bankrupt
             checkWin(newState);
             if (currentPlayer.money <= 0) {
-                console.log(currentPlayer.districts.length !== 0 || currentPlayer.tramStops.length !== 0 || currentPlayer.incinerators.length !== 0 || currentPlayer.dams.length !== 0)
                 if (currentPlayer.districts.length !== 0 || currentPlayer.tramStops.length !== 0 || currentPlayer.incinerators.length !== 0 || currentPlayer.dams.length !== 0) {
                     for (const district of currentPlayer.districts) {
                         currentPlayer.money += (newState.gameBoard.fields[district] as DistrictType).price;
@@ -662,11 +659,9 @@ const reducer = (state: GameState, action: Action): GameState => {
                     for (const dam of currentPlayer.dams) {
                         currentPlayer.money += (newState.gameBoard.fields[dam] as DamType).price;
                     }
-                    console.log(1);
                     newState.moneyMessage = `${currentPlayer.name} sold all their properties and received ${currentPlayer.money} 000 Kč.`;
                     bankruptFunc(false)
                 } else {
-                    console.log(2);
                     bankruptFunc()
                 }
             }
