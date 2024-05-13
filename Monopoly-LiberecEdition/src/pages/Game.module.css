@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr;
     grid-template-rows: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr;
-    background-color: var(--black);
+    background-color: var(--black-BG);
     height: 100%;
     margin: 3em auto;
     text-align: center;

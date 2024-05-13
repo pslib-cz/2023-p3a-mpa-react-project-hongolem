@@ -13,6 +13,7 @@ table {
     text-align: left;
     border-collapse: collapse;
     line-height: 1.5;
+    color: var(--white);
 }
 
 thead tr th {
