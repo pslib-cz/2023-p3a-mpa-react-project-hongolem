@@ -1,0 +1,35 @@
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.textBox {
+    background: var(--blue-BG);
+    color: var(--white);
+    border: 1px solid var(--black);
+    border-radius: 0.5em;
+    padding: 1em 2em;
+    margin: 2em auto;
+    width: 70%;
+}
+
+.ruleButton {
+    margin: 0 auto;
+}
+
+.ruleBox {
+    margin: 2em auto;
+    display: flex;
+    align-items: center;
+}
