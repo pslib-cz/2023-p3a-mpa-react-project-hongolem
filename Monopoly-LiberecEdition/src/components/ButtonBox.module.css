@@ -1,0 +1,34 @@
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    gap: 1em;
+    grid-row: 2;
+}
+
+.btn {
+    width: 8em;
+}
+
+.menuButton {
+    padding: 0.4em 0;
+    text-align: center;
+    align-self: flex-end;
+    grid-row: 3;
+    margin-bottom: 1em;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.containerFullHeight {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    height: 100vh;
+}

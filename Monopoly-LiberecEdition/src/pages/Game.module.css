@@ -1,0 +1,43 @@
+.board {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr;
+    grid-template-rows: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr;
+    background-color: var(--black-BG);
+    height: 100%;
+    margin: 3em auto;
+    text-align: center;
+}
+
+.game {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 3em;
+    height: 100vh;
+    margin: 0 3em;
+}
+
+.alignUp {
+    align-self: flex-start;
+    height: 100vh;
+}
+
+.textContainer {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--white);
+    width: 100%;
+    grid-column: 2 / span 9;
+    grid-row: 2 / span 9;
+}
+
+.message {
+    font-size: 2rem;
+}
+.moneyMessage, .rollMessage {
+    font-size: 1.5rem;
+}

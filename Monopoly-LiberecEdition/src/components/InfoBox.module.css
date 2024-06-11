@@ -1,0 +1,38 @@
+.tableContainer {
+    margin: 3em auto;
+    border: 1px solid var(--black);
+    border-radius: 1em;
+    background-color: var(--blue);
+    width: max-content;
+}
+
+table {
+    margin: 0 auto;
+    border-radius: 1em;
+    border: none;
+    text-align: left;
+    border-collapse: collapse;
+    line-height: 1.5;
+    color: var(--white);
+}
+
+thead tr th {
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0.5em;
+    text-align: center;
+}
+
+td, th {
+    border: none;
+    padding: 0 1em;
+}
+
+thead {
+    border-bottom: 1px solid var(--black);
+}
+
+tfoot {
+    border-top: 1px solid var(--black);
+    padding: 1em;
+}

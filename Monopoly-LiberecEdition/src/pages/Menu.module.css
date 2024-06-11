@@ -1,0 +1,78 @@
+.menu {
+    text-align: center;
+    margin: 2em;
+}
+
+.title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    color: var(--black);
+}
+.nameLabel {
+    font-size: 1.5rem;
+
+}
+.nameInput {
+    font-size: 1.5rem;
+    margin: 0 auto 1em;
+    padding: 0.5em 1em;
+    border: 1px solid;
+    border-radius: 0.5rem;
+    background-color: var(--white);
+    color: var(--black);
+}
+.nameLabel.red {
+    color: var(--player1);
+}
+.nameInput.red {
+    border-color: var(--player1);
+}
+
+.nameInput.green {
+    border-color: var(--player2);
+}
+.nameLabel.green {
+    color: var(--player2);
+}
+
+.nameInput.blue {
+    border-color: var(--player3);
+}
+.nameLabel.blue {
+    color: var(--player3);
+}
+
+.nameInput.yellow {
+    border-color: var(--player4);
+}
+.nameLabel.yellow {
+    color: var(--player4);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 2em auto;
+    width: 30em;
+    background-color: var(--blue);
+    border-radius: 1em;
+    border: 1px solid var(--black);
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    margin-top: 1em;
+    color: var(--blue);
+}
+
+.buttonBox{
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+}

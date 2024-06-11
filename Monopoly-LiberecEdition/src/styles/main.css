@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+:root {
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    --font: 'Open Sans', sans-serif;
+    --blue: #39f;
+    --blue-hover: #26D;
+    --red: #f33;
+    --red-hover: #a00;
+    --grey: #999;
+    --grey-hover: #666;
+    --black: #000;
+    --black-BG: rgba(0, 0, 0, 0.6);
+    --blue-BG: rgba(51, 153, 255, 0.7);
+    --white: #fff;
+    
+    --player1: #f00;
+    --player2: #0f0;
+    --player3: #00f;
+    --player4: #ff0;
+}
+
+html {
+    max-width: 1920px;
+    margin: 0 auto;
+    font-size: 16px;
+    font-family: Open Sans, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+body {
+    margin: 0;
+    place-items: center;
+    min-width: 320px;
+    background: url(/img/Monopoly-BG.jpg) no-repeat fixed;
+    background-size: cover;
+}
+
+@media screen and (max-width: 1520px) {
+    html {
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.1;
+    }
+    
+}

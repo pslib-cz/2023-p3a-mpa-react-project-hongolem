@@ -1,0 +1,31 @@
+button, a {
+    border-radius: 8px;
+    border: 1px solid var(--black);
+    padding: 0.5em 1.5em;
+    font-size: 1.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    background-color: var(--blue);
+    color: var(--white);
+}
+a:hover, button:hover {
+    background-color: var(--blue-hover);
+}
+
+a.red, button.red {
+    background-color: var(--red);
+}
+a.red:hover, button.red:hover {
+    background-color: var(--red-hover);
+}
+
+button:focus, a:focus,
+button:focus-visible, a:focus-visible {
+    outline: 1px auto -webkit-focus-ring-color;
+}
+
+button:disabled, a:disabled, a.red:disabled, button.red:disabled {
+    background-color: var(--grey);
+    color: var(--black);
+    cursor: not-allowed;
+}
